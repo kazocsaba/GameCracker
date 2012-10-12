@@ -1,6 +1,7 @@
 package hu.kazocsaba.gamecracker.graph;
 
 import hu.kazocsaba.gamecracker.game.GameStatus;
+import hu.kazocsaba.gamecracker.game.Player;
 
 /**
  * The result of a node in the game graph. This enumeration describes our knowledge of the result of game positions
@@ -35,6 +36,58 @@ public enum GraphResult {
 			case BLACK_WINS: return BLACK_WINS;
 			case DRAW: return DRAW;
 			default: throw new IllegalArgumentException("Game status is not final");
+		}
+	}
+	
+	/**
+	 * Returns the result describing that the specified player wins.
+	 * 
+	 * @param player a player
+	 * @return {@code WHITE_WINS} if the player is White, {@code BLACK_WINS} if the player is Black
+	 */
+	public static GraphResult getWin(Player player) {
+		switch (player) {
+			case WHITE: return WHITE_WINS;
+			default: return BLACK_WINS;
+		}
+	}
+	
+	/**
+	 * Returns the result describing that the specified player will not win.
+	 * 
+	 * @param player a player
+	 * @return {@code WHITE_WONT_WIN} if the player is White, {@code BLACK_WONT_WIN} if the player is Black
+	 */
+	public static GraphResult getWontWin(Player player) {
+		switch (player) {
+			case WHITE: return WHITE_WONT_WIN;
+			default: return BLACK_WONT_WIN;
+		}
+	}
+	
+	/**
+	 * Returns whether this result describes that the specified player wins.
+	 * 
+	 * @param player a player
+	 * @return {@code true} if the specified player definitely wins from this state, {@code false} otherwise
+	 */
+	public boolean willWin(Player player) {
+		switch (player) {
+			case WHITE: return this==WHITE_WINS;
+			default: return this==BLACK_WINS;
+		}
+	}
+	
+	/**
+	 * Returns whether this result may turn out to be a win for the specified player.
+	 * 
+	 * @param player a player
+	 * @return {@code true} if it is possible that the specified player will win, {@code false} if {@code player} cannot win
+	 */
+	public boolean canWin(Player player) {
+		switch (player) {
+			case WHITE: return this!=WHITE_WONT_WIN && this!=BLACK_WINS;
+			default: return this!=BLACK_WONT_WIN && this!=WHITE_WINS;
 		}
 	}
 	
