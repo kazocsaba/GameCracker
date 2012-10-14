@@ -17,6 +17,13 @@ public abstract class Game {
 	 * @return the initial position
 	 */
 	public abstract Position getInitialPosition();
+	
+	/**
+	 * Returns the category function for computing the categories of this game's positions.
+	 * 
+	 * @return a category function for this game
+	 */
+	public abstract CategoryFunction getCategoryFunction();
 
 	/**
 	 * Returns the maximum size of serialized positions. This is an upper limit to the number of bytes

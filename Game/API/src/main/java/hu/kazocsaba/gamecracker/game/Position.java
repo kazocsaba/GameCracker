@@ -65,6 +65,15 @@ public abstract class Position {
 	public abstract Position transform(Transformation t);
 	
 	/**
+	 * Finds the transformation which, when applied to this position, returns the target position specified in the argument.
+	 * 
+	 * @param target the position to reach
+	 * @return a transformation {@code trans} for which {@code this.transform(trans).equals(target)}, or {@code null} if no
+	 * such transformation exists
+	 */
+	public abstract Transformation getTransformationTo(Position target);
+	
+	/**
 	 * Returns whether the specified object is "equal to" this one. Beside the general contract of the equals method,
 	 * it is required that if two positions {@code p1} and {@code p2} are equal, then
 	 * <ol>
