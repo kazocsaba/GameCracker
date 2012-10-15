@@ -32,4 +32,13 @@ public interface Transformation {
 	 * @return the inverse of this transformation
 	 */
 	public Transformation inverse();
+	
+	/**
+	 * Returns the transformation that is the composition of this transformation and the argument. The composition is the
+	 * transformation that is equivalent to applying this transformation, and then applying {@code trans} to the result.
+	 * 
+	 * @param trans a transformation
+	 * @return the composition of this transformation and the argument
+	 */
+	public Transformation compose(Transformation trans);
 }
