@@ -8,9 +8,12 @@ import java.util.List;
  * <p>
  * Implementations of this class should be immutable.
  * 
+ * @param <P> the concrete Position type
+ * @param <M> the concrete Move type
+ * @param <T> the concrete Transformation type
  * @author Kazó Csaba
  */
-public abstract class Position {
+public abstract class Position<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> {
 	/**
 	 * Returns the status of this position. In final positions, this function returns the outcome as either
 	 * {@code GameStatus.WHITE_WINS}, {@code GameStatus.BLACK_WINS}, or {@code GameStatus.DRAW}. Otherwise the return
@@ -30,7 +33,7 @@ public abstract class Position {
 	 * 
 	 * @return a list of the valid moves in this position
 	 */
-	public abstract List<Move> getMoves();
+	public abstract List<M> getMoves();
 	
 	/**
 	 * Applies a move in this position and returns the object describing the position following the move.
@@ -39,7 +42,7 @@ public abstract class Position {
 	 * @return the position after the move
 	 * @throws IllegalArgumentException if {@code move} is not one of the moves returned by {@link #getMoves()}
 	 */
-	public abstract Position move(Move move);
+	public abstract P move(M move);
 
 	/**
 	 * Transforms this position with the specified transformation and returns the result.
@@ -62,7 +65,7 @@ public abstract class Position {
 	 * @return the result of the transformation
 	 * @throws IllegalArgumentException if the argument is not a valid transformation for this game
 	 */
-	public abstract Position transform(Transformation t);
+	public abstract P transform(T t);
 	
 	/**
 	 * Finds the transformation which, when applied to this position, returns the target position specified in the argument.
@@ -71,7 +74,7 @@ public abstract class Position {
 	 * @return a transformation {@code trans} for which {@code this.transform(trans).equals(target)}, or {@code null} if no
 	 * such transformation exists
 	 */
-	public abstract Transformation getTransformationTo(Position target);
+	public abstract T getTransformationTo(P target);
 	
 	/**
 	 * Returns whether the specified object is "equal to" this one. Beside the general contract of the equals method,

@@ -7,16 +7,19 @@ import java.io.IOException;
 /**
  * A game. This class is used to access the initial position, and it also provides I/O functions on the game objects:
  * the {@link Position positions}, {@link Move moves}, and {@link Transformation transformations}.
- *
+ * 
+ * @param <P> the concrete Position type
+ * @param <M> the concrete Move type
+ * @param <T> the concrete Transformation type
  * @author Kazó Csaba
  */
-public abstract class Game {
+public abstract class Game<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> {
 	/**
 	 * Returns the initial position of the game.
 	 *
 	 * @return the initial position
 	 */
-	public abstract Position getInitialPosition();
+	public abstract P getInitialPosition();
 	
 	/**
 	 * Returns the category function for computing the categories of this game's positions.
@@ -42,7 +45,7 @@ public abstract class Game {
 	 * @param out the output to receive the byte data
 	 * @throws IOException if the {@code DataOutput} encounters an I/O error
 	 */
-	public abstract void writePosition(Position position, DataOutput out) throws IOException;
+	public abstract void writePosition(P position, DataOutput out) throws IOException;
 
 	/**
 	 * Reads a position. It is assumed that the input contains data previously produced by a call to
@@ -55,7 +58,7 @@ public abstract class Game {
 	 * @throws hu.kazocsaba.gamecracker.InconsistencyException if the data in the input was definitely not produced
 	 * by {@code writePosition}
 	 */
-	public abstract Position readPosition(DataInput in) throws IOException;
+	public abstract P readPosition(DataInput in) throws IOException;
 
 	/**
 	 * Returns an upper limit to the number of valid moves in a position of a valid game. If a position {@code pos} is
@@ -84,7 +87,7 @@ public abstract class Game {
 	 * @param out the output to receive the byte data
 	 * @throws IOException if the {@code DataOutput} encounters an I/O error
 	 */
-	public abstract void writeTransformation(Transformation transformation, DataOutput out) throws IOException;
+	public abstract void writeTransformation(T transformation, DataOutput out) throws IOException;
 	
 	/**
 	 * Reads a transformation. This function must read exactly {@link #getTransformationSerializedSize()} bytes and,
@@ -97,5 +100,5 @@ public abstract class Game {
 	 * @throws hu.kazocsaba.gamecracker.InconsistencyException if the data in the input was definitely not produced
 	 * by {@code writeTransformation}
 	 */
-	public abstract Transformation readTransformation(DataInput in) throws IOException;
+	public abstract T readTransformation(DataInput in) throws IOException;
 }

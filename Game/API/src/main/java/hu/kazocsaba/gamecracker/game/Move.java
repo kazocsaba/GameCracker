@@ -6,9 +6,11 @@ package hu.kazocsaba.gamecracker.game;
  * <p>
  * Implementations of this interface should be immutable.
  * 
+ * @param <M> the concrete Move type
+ * @param <T> the concrete Transformation type
  * @author Kazó Csaba
  */
-public interface Move {
+public interface Move<M extends Move<M, T>, T extends Transformation<T>> {
 	/**
 	 * Transforms this move with the specified transformation and returns the result.
 	 * 
@@ -16,5 +18,5 @@ public interface Move {
 	 * @return the result of the transformation
 	 * @throws IllegalArgumentException if the argument is not a valid transformation for this game
 	 */
-	public Move transform(Transformation t);
+	public M transform(T t);
 }

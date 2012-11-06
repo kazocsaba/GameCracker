@@ -5,9 +5,10 @@ package hu.kazocsaba.gamecracker.game;
  * <p>
  * Implementations of this interface should be enumeration types.
  *
+ * @param <T> the transformation type subclass
  * @author Kazó Csaba
  */
-public interface Transformation {
+public interface Transformation<T extends Transformation<T>> {
 	/**
 	 * Returns whether this transformation is the identity. Transforming positions and moves with the identity
 	 * transformation results in the same objects.
@@ -31,7 +32,7 @@ public interface Transformation {
 	 * 
 	 * @return the inverse of this transformation
 	 */
-	public Transformation inverse();
+	public T inverse();
 	
 	/**
 	 * Returns the transformation that is the composition of this transformation and the argument. The composition is the
@@ -40,5 +41,5 @@ public interface Transformation {
 	 * @param trans a transformation
 	 * @return the composition of this transformation and the argument
 	 */
-	public Transformation compose(Transformation trans);
+	public T compose(T trans);
 }

@@ -8,7 +8,7 @@ package hu.kazocsaba.gamecracker.game;
  * 
  * @author Kazó Csaba
  */
-public enum SquareTransformation implements Transformation {
+public enum SquareTransformation implements Transformation<SquareTransformation> {
 
 	/**
 	 * The identity transformation: (i, j) -> (i, j).
@@ -20,12 +20,12 @@ public enum SquareTransformation implements Transformation {
 		}
 
 		@Override
-		public Transformation compose(Transformation trans) {
+		public SquareTransformation compose(SquareTransformation trans) {
 			return trans;
 		}
 
 		@Override
-		public Transformation inverse() {
+		public SquareTransformation inverse() {
 			return this;
 		}
 
@@ -46,13 +46,13 @@ public enum SquareTransformation implements Transformation {
 	HORIZONTAL_REFLECTION {
 
 		@Override
-		public Transformation inverse() {
+		public SquareTransformation inverse() {
 			return this;
 		}
 
 		@Override
-		public Transformation compose(Transformation trans) {
-			switch ((SquareTransformation)trans) {
+		public SquareTransformation compose(SquareTransformation trans) {
+			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return IDENTITY;
 				case VERTICAL_REFLECTION: return ROTATION_180;
@@ -82,13 +82,13 @@ public enum SquareTransformation implements Transformation {
 	VERTICAL_REFLECTION {
 
 		@Override
-		public Transformation inverse() {
+		public SquareTransformation inverse() {
 			return this;
 		}
 
 		@Override
-		public Transformation compose(Transformation trans) {
-			switch ((SquareTransformation)trans) {
+		public SquareTransformation compose(SquareTransformation trans) {
+			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return ROTATION_180;
 				case VERTICAL_REFLECTION: return IDENTITY;
@@ -118,13 +118,13 @@ public enum SquareTransformation implements Transformation {
 	ROTATION_90 {
 
 		@Override
-		public Transformation inverse() {
+		public SquareTransformation inverse() {
 			return ROTATION_270;
 		}
 
 		@Override
-		public Transformation compose(Transformation trans) {
-			switch ((SquareTransformation)trans) {
+		public SquareTransformation compose(SquareTransformation trans) {
+			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return MINOR_DIAGONAL_REFLECTION;
 				case VERTICAL_REFLECTION: return MAJOR_DIAGONAL_REFLECTION;
@@ -154,13 +154,13 @@ public enum SquareTransformation implements Transformation {
 	ROTATION_180 {
 
 		@Override
-		public Transformation inverse() {
+		public SquareTransformation inverse() {
 			return this;
 		}
 
 		@Override
-		public Transformation compose(Transformation trans) {
-			switch ((SquareTransformation)trans) {
+		public SquareTransformation compose(SquareTransformation trans) {
+			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return VERTICAL_REFLECTION;
 				case VERTICAL_REFLECTION: return HORIZONTAL_REFLECTION;
@@ -190,13 +190,13 @@ public enum SquareTransformation implements Transformation {
 	ROTATION_270 {
 
 		@Override
-		public Transformation inverse() {
+		public SquareTransformation inverse() {
 			return ROTATION_90;
 		}
 
 		@Override
-		public Transformation compose(Transformation trans) {
-			switch ((SquareTransformation)trans) {
+		public SquareTransformation compose(SquareTransformation trans) {
+			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return MAJOR_DIAGONAL_REFLECTION;
 				case VERTICAL_REFLECTION: return MINOR_DIAGONAL_REFLECTION;
@@ -226,13 +226,13 @@ public enum SquareTransformation implements Transformation {
 	MAJOR_DIAGONAL_REFLECTION {
 
 		@Override
-		public Transformation inverse() {
+		public SquareTransformation inverse() {
 			return this;
 		}
 
 		@Override
-		public Transformation compose(Transformation trans) {
-			switch ((SquareTransformation)trans) {
+		public SquareTransformation compose(SquareTransformation trans) {
+			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return ROTATION_270;
 				case VERTICAL_REFLECTION: return ROTATION_90;
@@ -262,13 +262,13 @@ public enum SquareTransformation implements Transformation {
 	MINOR_DIAGONAL_REFLECTION {
 
 		@Override
-		public Transformation inverse() {
+		public SquareTransformation inverse() {
 			return this;
 		}
 
 		@Override
-		public Transformation compose(Transformation trans) {
-			switch ((SquareTransformation)trans) {
+		public SquareTransformation compose(SquareTransformation trans) {
+			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return ROTATION_90;
 				case VERTICAL_REFLECTION: return ROTATION_270;

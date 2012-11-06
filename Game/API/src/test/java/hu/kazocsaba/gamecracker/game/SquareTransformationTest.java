@@ -76,7 +76,7 @@ public class SquareTransformationTest {
 	public void testComposition() {
 		for (SquareTransformation t1: SquareTransformation.values()) {
 			for (SquareTransformation t2: SquareTransformation.values()) {
-				SquareTransformation comp=(SquareTransformation) t1.compose(t2);
+				SquareTransformation comp=t1.compose(t2);
 				assertEquals(transform(square, comp), transform(transform(square, t1), t2), "Incorrect "+t1+".compose("+t2+")");
 			}
 		}
