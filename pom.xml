@@ -9,6 +9,7 @@
 	<modules>
 		<module>Game/API</module>
 		<module>Game/Testing</module>
+		<module>Game/TicTacToe</module>
 		<module>Graph/API</module>
 	</modules>
 
