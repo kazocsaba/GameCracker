@@ -10,7 +10,7 @@ package hu.kazocsaba.gamecracker.game;
  * @param <T> the concrete Transformation type
  * @author Kazó Csaba
  */
-public interface Move<M extends Move<M, T>, T extends Transformation<T>> {
+public abstract class Move<M extends Move<M, T>, T extends Transformation<T>> {
 	/**
 	 * Transforms this move with the specified transformation and returns the result.
 	 * 
@@ -18,5 +18,23 @@ public interface Move<M extends Move<M, T>, T extends Transformation<T>> {
 	 * @return the result of the transformation
 	 * @throws IllegalArgumentException if the argument is not a valid transformation for this game
 	 */
-	public M transform(T t);
+	public abstract M transform(T t);
+	
+	/**
+	 * Returns whether the specified object is "equal to" this one. Beside the general contract of the equals method,
+	 * it is required that if two moves {@code m1} and {@code m2} are equal, then for any position {@code pos}:
+	 * <ol>
+	 * <li>if {@code m1} is valid in {@code pos}, then {@code m2} must also be valid, and they must lead to equal
+	 * positions: {@code pos.move(m1).equals(pos.move(m2))};</li>
+	 * <li>if {@code m1} is not valid in {@code pos}, then {@code m2} must also be invalid.</li>
+	 * </ol>
+	 * 
+	 * @param obj the object with which to compare
+	 * @return true if this object is equal to the argument
+	 */
+	@Override
+	public abstract boolean equals(Object obj);
+
+	@Override
+	public abstract int hashCode();
 }
