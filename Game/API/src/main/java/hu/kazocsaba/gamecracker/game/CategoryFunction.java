@@ -6,9 +6,10 @@ package hu.kazocsaba.gamecracker.game;
  * <p>
  * Implementations must be immutable, therefore they are thread-safe.
  * 
+ * @param <P> the concrete Position type
  * @author Kazó Csaba
  */
-public abstract class CategoryFunction {
+public abstract class CategoryFunction<P extends Position<P,?,?>> {
 	/**
 	 * Computes the category of a position. This function must guarantee that for any positions {@code p1} and {@code p2},
 	 * if {@code p1.getTransformationTo(p2) != null}, then {@code category(p1) == category(p2)}.
@@ -16,5 +17,5 @@ public abstract class CategoryFunction {
 	 * @param position a position
 	 * @return the category of the position
 	 */
-	public abstract long category(Position position);
+	public abstract long category(P position);
 }
