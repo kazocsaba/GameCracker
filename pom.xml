@@ -8,6 +8,7 @@
 
 	<modules>
 		<module>Game/API</module>
+		<module>Game/Testing</module>
 		<module>Graph/API</module>
 	</modules>
 
@@ -43,6 +44,12 @@
 				<groupId>hu.kazocsaba.gamecracker</groupId>
 				<artifactId>Game-API</artifactId>
 				<version>1.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.kazocsaba.gamecracker</groupId>
+				<artifactId>Game-Testing</artifactId>
+				<version>1.0-SNAPSHOT</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>hu.kazocsaba.gamecracker</groupId>
