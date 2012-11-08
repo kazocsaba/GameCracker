@@ -55,7 +55,7 @@ public abstract class Game<P extends Position<P,M,T>, M extends Move<M,T>, T ext
 	 * @param in the source to read from
 	 * @return the position read from the input
 	 * @throws IOException if the {@code DataInput} encounters an I/O error
-	 * @throws hu.kazocsaba.gamecracker.InconsistencyException if the data in the input was definitely not produced
+	 * @throws hu.kazocsaba.gamecracker.InconsistencyError if the data in the input was definitely not produced
 	 * by {@code writePosition}
 	 */
 	public abstract P readPosition(DataInput in) throws IOException;
@@ -97,7 +97,7 @@ public abstract class Game<P extends Position<P,M,T>, M extends Move<M,T>, T ext
 	 * @param in the source to read from
 	 * @return the transformation read from the input
 	 * @throws IOException if the {@code DataInput} encounters an I/O error
-	 * @throws hu.kazocsaba.gamecracker.InconsistencyException if the data in the input was definitely not produced
+	 * @throws hu.kazocsaba.gamecracker.InconsistencyError if the data in the input was definitely not produced
 	 * by {@code writeTransformation}
 	 */
 	public abstract T readTransformation(DataInput in) throws IOException;
