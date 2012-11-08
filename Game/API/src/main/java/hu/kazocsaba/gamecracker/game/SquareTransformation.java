@@ -1,5 +1,10 @@
 package hu.kazocsaba.gamecracker.game;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import hu.kazocsaba.gamecracker.InconsistencyError;
+
 /**
  * A transformation of a square board. This transformation set does not support player switching.
  * <p>
@@ -294,6 +299,31 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 	}
 	;
 
+	/**
+	 * Serializer object for {@code SquareTransformation}s.
+	 */
+	public static final TransformationSerializer<SquareTransformation> SERIALIZER=new TransformationSerializer<SquareTransformation>() {
+		// Avoid copying the array in values() by using our own instance
+		private final SquareTransformation[] VALUES=SquareTransformation.values();
+		
+		@Override
+		public int getTransformationSerializedSize() {
+			return 1;
+		}
+
+		@Override
+		public void writeTransformation(SquareTransformation transformation, DataOutput out) throws IOException {
+			out.writeByte(transformation.ordinal());
+		}
+
+		@Override
+		public SquareTransformation readTransformation(DataInput in) throws IOException {
+			int ordinal=in.readByte() & 0xFF;
+			if (ordinal<0 || ordinal>=VALUES.length) throw new InconsistencyError("Invalid transformation code: "+ordinal);
+			return VALUES[ordinal];
+		}
+	};
+	
 	@Override
 	public boolean isPlayerSwitching() {
 		return false;
