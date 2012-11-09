@@ -1,6 +1,5 @@
 package hu.kazocsaba.gamecracker.game.tictactoe;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import hu.kazocsaba.gamecracker.game.GameStatus;
@@ -143,7 +142,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 	}
 	
 	@Test
-	public void positionIOTest() throws IOException {
+	public void positionIOTest() {
 		// win on edge with move in middle
 		TicTacToePosition position=game.getInitialPosition();
 		
