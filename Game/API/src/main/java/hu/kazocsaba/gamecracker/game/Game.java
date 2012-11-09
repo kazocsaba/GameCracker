@@ -46,4 +46,17 @@ public abstract class Game<P extends Position<P,M,T>, M extends Move<M,T>, T ext
 	 * @return the maximum number of possible moves in a valid position
 	 */
 	public abstract int getMaxPossibleMoves();
+	
+	/**
+	 * Returns the name of this game.
+	 * 
+	 * @return the name of this game
+	 */
+	public abstract String getName();
+
+	@Override
+	public String toString() {
+		return getName();
+	}
+	
 }

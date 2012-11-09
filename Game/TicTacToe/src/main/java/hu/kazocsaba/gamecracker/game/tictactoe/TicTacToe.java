@@ -12,6 +12,11 @@ import hu.kazocsaba.gamecracker.game.TransformationSerializer;
  */
 public class TicTacToe extends Game<TicTacToePosition, TicTacToeMove, SquareTransformation> {
 	private static final TicTacToePosition INITIAL=new TicTacToePosition();
+
+	@Override
+	public String getName() {
+		return "Tic Tac Toe";
+	}
 	
 	@Override
 	public TicTacToePosition getInitialPosition() {
