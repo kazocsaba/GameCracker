@@ -31,10 +31,20 @@ public class TicTacToeMove extends Move<TicTacToeMove, SquareSymmetry> {
 		return new TicTacToeMove(t.transformX(x, y, 3), t.transformY(x, y, 3));
 	}
 
+	/**
+	 * Returns the x coordinate of the move.
+	 * 
+	 * @return the index of the column where the move is made
+	 */
 	public int getX() {
 		return x;
 	}
 
+	/**
+	 * Returns the y coordinate of the move.
+	 * 
+	 * @return the index of the row where the move is made
+	 */
 	public int getY() {
 		return y;
 	}
