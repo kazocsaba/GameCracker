@@ -1,6 +1,10 @@
 package hu.kazocsaba.gamecracker.game;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.util.EnumMap;
+import hu.kazocsaba.gamecracker.InconsistencyError;
 
 /**
  * A transformation of a square board with a possibility of switching the players.
@@ -230,6 +234,31 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		
 	},
 	;
+	/**
+	 * Serializer object for {@code SquareSymmetry} objects.
+	 */
+	public static final TransformationSerializer<SwitchableSquareSymmetry> SERIALIZER=new TransformationSerializer<SwitchableSquareSymmetry>() {
+		// Avoid copying the array in values() by using our own instance
+		private final SwitchableSquareSymmetry[] VALUES=SwitchableSquareSymmetry.values();
+		
+		@Override
+		public int getTransformationSerializedSize() {
+			return 1;
+		}
+
+		@Override
+		public void writeTransformation(SwitchableSquareSymmetry transformation, DataOutput out) throws IOException {
+			out.writeByte(transformation.ordinal());
+		}
+
+		@Override
+		public SwitchableSquareSymmetry readTransformation(DataInput in) throws IOException {
+			int ordinal=in.readByte() & 0xFF;
+			if (ordinal<0 || ordinal>=VALUES.length) throw new InconsistencyError("Invalid transformation code: "+ordinal);
+			return VALUES[ordinal];
+		}
+	};
+	
 	private static final EnumMap<SquareSymmetry, SwitchableSquareSymmetry> MAP_TO_SWITCHABLE;
 	static {
 		MAP_TO_SWITCHABLE=new EnumMap<>(SquareSymmetry.class);
@@ -246,6 +275,7 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		MAP_TO_SWITCHABLE.put(SquareSymmetry.MAJOR_DIAGONAL_REFLECTION, MAJOR_DIAGONAL_REFLECTION);
 		MAP_TO_SWITCHABLE.put(SquareSymmetry.MINOR_DIAGONAL_REFLECTION, MINOR_DIAGONAL_REFLECTION);
 	}
+	
 	private final SquareSymmetry baseBoardTransform;
 
 	private SwitchableSquareSymmetry(SquareSymmetry baseBoardTransform) {
