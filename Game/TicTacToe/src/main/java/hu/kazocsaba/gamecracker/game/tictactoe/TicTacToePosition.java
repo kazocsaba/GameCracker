@@ -15,13 +15,13 @@ import hu.kazocsaba.gamecracker.game.GameStatus;
 import hu.kazocsaba.gamecracker.game.Player;
 import hu.kazocsaba.gamecracker.game.Position;
 import hu.kazocsaba.gamecracker.game.PositionSerializer;
-import hu.kazocsaba.gamecracker.game.SquareTransformation;
+import hu.kazocsaba.gamecracker.game.SquareSymmetry;
 
 /**
  * A position in Tic Tac Toe.
  * @author Kazó Csaba
  */
-public class TicTacToePosition extends Position<TicTacToePosition, TicTacToeMove, SquareTransformation> {
+public class TicTacToePosition extends Position<TicTacToePosition, TicTacToeMove, SquareSymmetry> {
 	private final Player[][] board;
 	private final GameStatus status;
 	
@@ -224,7 +224,7 @@ public class TicTacToePosition extends Position<TicTacToePosition, TicTacToeMove
 	}
 
 	@Override
-	public TicTacToePosition transform(SquareTransformation t) {
+	public TicTacToePosition transform(SquareSymmetry t) {
 		Player[][] newBoard=new Player[3][3];
 		for (int x=0; x<3; x++) for (int y=0; y<3; y++)
 			newBoard[t.transformX(x, y, 3)][t.transformY(x, y, 3)]=board[x][y];
@@ -232,21 +232,21 @@ public class TicTacToePosition extends Position<TicTacToePosition, TicTacToeMove
 	}
 
 	@Override
-	public SquareTransformation getTransformationTo(TicTacToePosition target) {
+	public SquareSymmetry getTransformationTo(TicTacToePosition target) {
 		if (status!=target.status) return null;
-		EnumSet<SquareTransformation> possibleTransformations=EnumSet.allOf(SquareTransformation.class);
+		EnumSet<SquareSymmetry> possibleTransformations=EnumSet.allOf(SquareSymmetry.class);
 		
 		for (int x=0; x<3; x++) for (int y=0; y<3; y++) {
 			Player myCell=board[x][y];
-			for (Iterator<SquareTransformation> transformIterator=possibleTransformations.iterator(); transformIterator.hasNext();) {
-				SquareTransformation trans=transformIterator.next();
+			for (Iterator<SquareSymmetry> transformIterator=possibleTransformations.iterator(); transformIterator.hasNext();) {
+				SquareSymmetry trans=transformIterator.next();
 				Player targetCell=target.board[trans.transformX(x, y, 3)][trans.transformY(x, y, 3)];
 				if (myCell!=targetCell)
 					transformIterator.remove();
 			}
 			if (possibleTransformations.isEmpty()) return null;
 		}
-		if (possibleTransformations.contains(SquareTransformation.IDENTITY)) return SquareTransformation.IDENTITY;
+		if (possibleTransformations.contains(SquareSymmetry.IDENTITY)) return SquareSymmetry.IDENTITY;
 		return possibleTransformations.iterator().next();
 	}
 

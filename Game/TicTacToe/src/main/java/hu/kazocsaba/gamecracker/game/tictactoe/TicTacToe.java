@@ -3,14 +3,14 @@ package hu.kazocsaba.gamecracker.game.tictactoe;
 import hu.kazocsaba.gamecracker.game.CategoryFunction;
 import hu.kazocsaba.gamecracker.game.Game;
 import hu.kazocsaba.gamecracker.game.PositionSerializer;
-import hu.kazocsaba.gamecracker.game.SquareTransformation;
+import hu.kazocsaba.gamecracker.game.SquareSymmetry;
 import hu.kazocsaba.gamecracker.game.TransformationSerializer;
 
 /**
  * The game Tic Tac Toe.
  * @author Kazó Csaba
  */
-public class TicTacToe extends Game<TicTacToePosition, TicTacToeMove, SquareTransformation> {
+public class TicTacToe extends Game<TicTacToePosition, TicTacToeMove, SquareSymmetry> {
 	private static final TicTacToePosition INITIAL=new TicTacToePosition();
 
 	@Override
@@ -39,8 +39,8 @@ public class TicTacToe extends Game<TicTacToePosition, TicTacToeMove, SquareTran
 	}
 
 	@Override
-	public TransformationSerializer<SquareTransformation> getTransformationSerializer() {
-		return SquareTransformation.SERIALIZER;
+	public TransformationSerializer<SquareSymmetry> getTransformationSerializer() {
+		return SquareSymmetry.SERIALIZER;
 	}
 
 

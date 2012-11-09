@@ -1,13 +1,13 @@
 package hu.kazocsaba.gamecracker.game.tictactoe;
 
 import hu.kazocsaba.gamecracker.game.Move;
-import hu.kazocsaba.gamecracker.game.SquareTransformation;
+import hu.kazocsaba.gamecracker.game.SquareSymmetry;
 
 /**
  * A move in Tic Tac Toe.
  * @author Kazó Csaba
  */
-public class TicTacToeMove extends Move<TicTacToeMove, SquareTransformation> {
+public class TicTacToeMove extends Move<TicTacToeMove, SquareSymmetry> {
 	private int x, y;
 
 	/**
@@ -27,7 +27,7 @@ public class TicTacToeMove extends Move<TicTacToeMove, SquareTransformation> {
 	}
 	
 	@Override
-	public TicTacToeMove transform(SquareTransformation t) {
+	public TicTacToeMove transform(SquareSymmetry t) {
 		return new TicTacToeMove(t.transformX(x, y, 3), t.transformY(x, y, 3));
 	}
 

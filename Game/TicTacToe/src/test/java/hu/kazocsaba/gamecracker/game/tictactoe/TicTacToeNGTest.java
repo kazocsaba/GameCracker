@@ -3,7 +3,7 @@ package hu.kazocsaba.gamecracker.game.tictactoe;
 import java.util.Arrays;
 import java.util.HashSet;
 import hu.kazocsaba.gamecracker.game.GameStatus;
-import hu.kazocsaba.gamecracker.game.SquareTransformation;
+import hu.kazocsaba.gamecracker.game.SquareSymmetry;
 import hu.kazocsaba.gamecracker.game.testing.AbstractGameTest;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -12,7 +12,7 @@ import static org.testng.Assert.*;
  *
  * @author Kazó Csaba
  */
-public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePosition, TicTacToeMove, SquareTransformation> {
+public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePosition, TicTacToeMove, SquareSymmetry> {
 
 	public TicTacToeNGTest() {
 		super(new TicTacToe());
@@ -36,24 +36,24 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		TicTacToePosition position1=position.move(TicTacToeMove.get(0, 2));
 		TicTacToePosition position2=position.move(TicTacToeMove.get(0, 0));
 		
-		SquareTransformation trans = position1.getTransformationTo(position2);
+		SquareSymmetry trans = position1.getTransformationTo(position2);
 		
-		assertTrue(trans==SquareTransformation.VERTICAL_REFLECTION || trans==SquareTransformation.ROTATION_270);
-		assertPositionsTransformed(position1, SquareTransformation.VERTICAL_REFLECTION, position2);
-		assertPositionsTransformed(position1, SquareTransformation.ROTATION_270, position2);
+		assertTrue(trans==SquareSymmetry.VERTICAL_REFLECTION || trans==SquareSymmetry.ROTATION_270);
+		assertPositionsTransformed(position1, SquareSymmetry.VERTICAL_REFLECTION, position2);
+		assertPositionsTransformed(position1, SquareSymmetry.ROTATION_270, position2);
 		
 		position1=position1.move(TicTacToeMove.get(0, 1));
 		position2=position2.move(TicTacToeMove.get(0, 1));
 		
-		assertEquals(position1.getTransformationTo(position2), SquareTransformation.VERTICAL_REFLECTION);
-		assertPositionsTransformed(position1, SquareTransformation.VERTICAL_REFLECTION, position2);
-		assertNotEquals(position1.transform(SquareTransformation.ROTATION_270), position2);
+		assertEquals(position1.getTransformationTo(position2), SquareSymmetry.VERTICAL_REFLECTION);
+		assertPositionsTransformed(position1, SquareSymmetry.VERTICAL_REFLECTION, position2);
+		assertNotEquals(position1.transform(SquareSymmetry.ROTATION_270), position2);
 		
 		// check moves
 		HashSet<TicTacToeMove> moves1=new HashSet<>(position1.getMoves());
 		HashSet<TicTacToeMove> moves2=new HashSet<>(position2.getMoves());
 		for (TicTacToeMove m: moves1)
-			assertTrue(moves2.contains(m.transform(SquareTransformation.VERTICAL_REFLECTION)));
+			assertTrue(moves2.contains(m.transform(SquareSymmetry.VERTICAL_REFLECTION)));
 		
 		position1=position1.move(TicTacToeMove.get(0, 0));
 		position2=position2.move(TicTacToeMove.get(0, 2));
@@ -87,7 +87,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		position=position.move(TicTacToeMove.get(1, 1));
 		position=position.move(TicTacToeMove.get(2, 0));
 		position=position.move(TicTacToeMove.get(2, 2));
-		for (SquareTransformation trans: SquareTransformation.values()) {
+		for (SquareSymmetry trans: SquareSymmetry.values()) {
 			TicTacToePosition transformedPosition=position.transform(trans);
 			assertEquals(transformedPosition.move(TicTacToeMove.get(1, 0).transform(trans)).getStatus(), GameStatus.WHITE_WINS);
 		}
@@ -99,7 +99,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		position=position.move(TicTacToeMove.get(1, 0));
 		position=position.move(TicTacToeMove.get(2, 1));
 		position=position.move(TicTacToeMove.get(2, 2));
-		for (SquareTransformation trans: SquareTransformation.values()) {
+		for (SquareSymmetry trans: SquareSymmetry.values()) {
 			TicTacToePosition transformedPosition=position.transform(trans);
 			assertEquals(transformedPosition.move(TicTacToeMove.get(1, 1).transform(trans)).getStatus(), GameStatus.WHITE_WINS);
 		}
@@ -111,7 +111,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		position=position.move(TicTacToeMove.get(1, 0));
 		position=position.move(TicTacToeMove.get(2, 2));
 		position=position.move(TicTacToeMove.get(2, 0));
-		for (SquareTransformation trans: SquareTransformation.values()) {
+		for (SquareSymmetry trans: SquareSymmetry.values()) {
 			TicTacToePosition transformedPosition=position.transform(trans);
 			assertEquals(transformedPosition.move(TicTacToeMove.get(1, 1).transform(trans)).getStatus(), GameStatus.WHITE_WINS);
 		}
@@ -123,7 +123,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		position=position.move(TicTacToeMove.get(1, 0));
 		position=position.move(TicTacToeMove.get(2, 1));
 		position=position.move(TicTacToeMove.get(2, 2));
-		for (SquareTransformation trans: SquareTransformation.values()) {
+		for (SquareSymmetry trans: SquareSymmetry.values()) {
 			TicTacToePosition transformedPosition=position.transform(trans);
 			assertEquals(transformedPosition.move(TicTacToeMove.get(0, 1).transform(trans)).getStatus(), GameStatus.WHITE_WINS);
 		}
@@ -135,7 +135,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		position=position.move(TicTacToeMove.get(1, 0));
 		position=position.move(TicTacToeMove.get(1, 1));
 		position=position.move(TicTacToeMove.get(2, 0));
-		for (SquareTransformation trans: SquareTransformation.values()) {
+		for (SquareSymmetry trans: SquareSymmetry.values()) {
 			TicTacToePosition transformedPosition=position.transform(trans);
 			assertEquals(transformedPosition.move(TicTacToeMove.get(2, 2).transform(trans)).getStatus(), GameStatus.WHITE_WINS);
 		}
@@ -150,7 +150,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		position=position.move(TicTacToeMove.get(1, 1));
 		position=position.move(TicTacToeMove.get(2, 0));
 		position=position.move(TicTacToeMove.get(2, 2));
-		for (SquareTransformation trans: SquareTransformation.values()) {
+		for (SquareSymmetry trans: SquareSymmetry.values()) {
 			TicTacToePosition transformedPosition=position.transform(trans);
 			testPositionSerializer(transformedPosition);
 			
@@ -165,7 +165,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		position=position.move(TicTacToeMove.get(1, 0));
 		position=position.move(TicTacToeMove.get(2, 1));
 		position=position.move(TicTacToeMove.get(2, 2));
-		for (SquareTransformation trans: SquareTransformation.values()) {
+		for (SquareSymmetry trans: SquareSymmetry.values()) {
 			TicTacToePosition transformedPosition=position.transform(trans);
 			testPositionSerializer(transformedPosition);
 			
@@ -180,7 +180,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		position=position.move(TicTacToeMove.get(1, 0));
 		position=position.move(TicTacToeMove.get(2, 2));
 		position=position.move(TicTacToeMove.get(2, 0));
-		for (SquareTransformation trans: SquareTransformation.values()) {
+		for (SquareSymmetry trans: SquareSymmetry.values()) {
 			TicTacToePosition transformedPosition=position.transform(trans);
 			testPositionSerializer(transformedPosition);
 			
@@ -195,7 +195,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		position=position.move(TicTacToeMove.get(1, 0));
 		position=position.move(TicTacToeMove.get(2, 1));
 		position=position.move(TicTacToeMove.get(2, 2));
-		for (SquareTransformation trans: SquareTransformation.values()) {
+		for (SquareSymmetry trans: SquareSymmetry.values()) {
 			TicTacToePosition transformedPosition=position.transform(trans);
 			testPositionSerializer(transformedPosition);
 			
@@ -210,7 +210,7 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 		position=position.move(TicTacToeMove.get(1, 0));
 		position=position.move(TicTacToeMove.get(1, 1));
 		position=position.move(TicTacToeMove.get(2, 0));
-		for (SquareTransformation trans: SquareTransformation.values()) {
+		for (SquareSymmetry trans: SquareSymmetry.values()) {
 			TicTacToePosition transformedPosition=position.transform(trans);
 			testPositionSerializer(transformedPosition);
 			

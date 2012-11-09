@@ -13,7 +13,7 @@ import hu.kazocsaba.gamecracker.InconsistencyError;
  * 
  * @author Kazó Csaba
  */
-public enum SquareTransformation implements Transformation<SquareTransformation> {
+public enum SquareSymmetry implements SquareBoardTransformation<SquareSymmetry> {
 
 	/**
 	 * The identity transformation: (i, j) -> (i, j).
@@ -25,12 +25,12 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 		}
 
 		@Override
-		public SquareTransformation compose(SquareTransformation trans) {
+		public SquareSymmetry compose(SquareSymmetry trans) {
 			return trans;
 		}
 
 		@Override
-		public SquareTransformation inverse() {
+		public SquareSymmetry inverse() {
 			return this;
 		}
 
@@ -51,12 +51,12 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 	HORIZONTAL_REFLECTION {
 
 		@Override
-		public SquareTransformation inverse() {
+		public SquareSymmetry inverse() {
 			return this;
 		}
 
 		@Override
-		public SquareTransformation compose(SquareTransformation trans) {
+		public SquareSymmetry compose(SquareSymmetry trans) {
 			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return IDENTITY;
@@ -87,12 +87,12 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 	VERTICAL_REFLECTION {
 
 		@Override
-		public SquareTransformation inverse() {
+		public SquareSymmetry inverse() {
 			return this;
 		}
 
 		@Override
-		public SquareTransformation compose(SquareTransformation trans) {
+		public SquareSymmetry compose(SquareSymmetry trans) {
 			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return ROTATION_180;
@@ -123,12 +123,12 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 	ROTATION_90 {
 
 		@Override
-		public SquareTransformation inverse() {
+		public SquareSymmetry inverse() {
 			return ROTATION_270;
 		}
 
 		@Override
-		public SquareTransformation compose(SquareTransformation trans) {
+		public SquareSymmetry compose(SquareSymmetry trans) {
 			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return MINOR_DIAGONAL_REFLECTION;
@@ -159,12 +159,12 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 	ROTATION_180 {
 
 		@Override
-		public SquareTransformation inverse() {
+		public SquareSymmetry inverse() {
 			return this;
 		}
 
 		@Override
-		public SquareTransformation compose(SquareTransformation trans) {
+		public SquareSymmetry compose(SquareSymmetry trans) {
 			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return VERTICAL_REFLECTION;
@@ -195,12 +195,12 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 	ROTATION_270 {
 
 		@Override
-		public SquareTransformation inverse() {
+		public SquareSymmetry inverse() {
 			return ROTATION_90;
 		}
 
 		@Override
-		public SquareTransformation compose(SquareTransformation trans) {
+		public SquareSymmetry compose(SquareSymmetry trans) {
 			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return MAJOR_DIAGONAL_REFLECTION;
@@ -231,12 +231,12 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 	MAJOR_DIAGONAL_REFLECTION {
 
 		@Override
-		public SquareTransformation inverse() {
+		public SquareSymmetry inverse() {
 			return this;
 		}
 
 		@Override
-		public SquareTransformation compose(SquareTransformation trans) {
+		public SquareSymmetry compose(SquareSymmetry trans) {
 			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return ROTATION_270;
@@ -267,12 +267,12 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 	MINOR_DIAGONAL_REFLECTION {
 
 		@Override
-		public SquareTransformation inverse() {
+		public SquareSymmetry inverse() {
 			return this;
 		}
 
 		@Override
-		public SquareTransformation compose(SquareTransformation trans) {
+		public SquareSymmetry compose(SquareSymmetry trans) {
 			switch (trans) {
 				case IDENTITY: return this;
 				case HORIZONTAL_REFLECTION: return ROTATION_90;
@@ -298,13 +298,13 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 		
 	}
 	;
-
+	
 	/**
-	 * Serializer object for {@code SquareTransformation}s.
+	 * Serializer object for {@code SquareSymmetry} objects.
 	 */
-	public static final TransformationSerializer<SquareTransformation> SERIALIZER=new TransformationSerializer<SquareTransformation>() {
+	public static final TransformationSerializer<SquareSymmetry> SERIALIZER=new TransformationSerializer<SquareSymmetry>() {
 		// Avoid copying the array in values() by using our own instance
-		private final SquareTransformation[] VALUES=SquareTransformation.values();
+		private final SquareSymmetry[] VALUES=SquareSymmetry.values();
 		
 		@Override
 		public int getTransformationSerializedSize() {
@@ -312,12 +312,12 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 		}
 
 		@Override
-		public void writeTransformation(SquareTransformation transformation, DataOutput out) throws IOException {
+		public void writeTransformation(SquareSymmetry transformation, DataOutput out) throws IOException {
 			out.writeByte(transformation.ordinal());
 		}
 
 		@Override
-		public SquareTransformation readTransformation(DataInput in) throws IOException {
+		public SquareSymmetry readTransformation(DataInput in) throws IOException {
 			int ordinal=in.readByte() & 0xFF;
 			if (ordinal<0 || ordinal>=VALUES.length) throw new InconsistencyError("Invalid transformation code: "+ordinal);
 			return VALUES[ordinal];
@@ -334,26 +334,4 @@ public enum SquareTransformation implements Transformation<SquareTransformation>
 		// overridden only in IDENTITY
 		return false;
 	}
-	
-	/**
-	 * Transforms a point and returns the x coordinate of the result. A {@code (size x size)} board
-	 * is assumed where the coordinates are in the range {@code [0, size-1]}.
-	 * 
-	 * @param x the x coordinate of the point
-	 * @param y the y coordinate of the point
-	 * @param size the size of the board
-	 * @return the x coordinate of the result of the transformation
-	 */
-	public abstract int transformX(int x, int y, int size);
-	
-	/**
-	 * Transforms a point and returns the y coordinate of the result. A {@code (size x size)} board
-	 * is assumed where the coordinates are in the range {@code [0, size-1]}.
-	 * 
-	 * @param x the x coordinate of the point
-	 * @param y the y coordinate of the point
-	 * @param size the size of the board
-	 * @return the x coordinate of the result of the transformation
-	 */
-	public abstract int transformY(int x, int y, int size);
 }

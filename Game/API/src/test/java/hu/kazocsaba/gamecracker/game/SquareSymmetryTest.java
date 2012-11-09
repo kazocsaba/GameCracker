@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
  *
  * @author Kazó Csaba
  */
-public class SquareTransformationTest {
+public class SquareSymmetryTest {
 	/*
 	 *    -----------------
 	 *    |   |   |   |   |
@@ -43,40 +43,40 @@ public class SquareTransformationTest {
 	 */
 	private final Point square=new Point(1, 0);
 	private final int size=4;
-	private final EnumMap<SquareTransformation, Point> images=new EnumMap<>(SquareTransformation.class);
+	private final EnumMap<SquareSymmetry, Point> images=new EnumMap<>(SquareSymmetry.class);
 	
 	@BeforeClass
 	public void setupMap() {
-		images.put(SquareTransformation.IDENTITY, square);
-		images.put(SquareTransformation.HORIZONTAL_REFLECTION, new Point(2, 0));
-		images.put(SquareTransformation.VERTICAL_REFLECTION, new Point(1, 3));
-		images.put(SquareTransformation.ROTATION_90, new Point(0, 2));
-		images.put(SquareTransformation.ROTATION_180, new Point(2, 3));
-		images.put(SquareTransformation.ROTATION_270, new Point(3, 1));
-		images.put(SquareTransformation.MAJOR_DIAGONAL_REFLECTION, new Point(0, 1));
-		images.put(SquareTransformation.MINOR_DIAGONAL_REFLECTION, new Point(3, 2));
+		images.put(SquareSymmetry.IDENTITY, square);
+		images.put(SquareSymmetry.HORIZONTAL_REFLECTION, new Point(2, 0));
+		images.put(SquareSymmetry.VERTICAL_REFLECTION, new Point(1, 3));
+		images.put(SquareSymmetry.ROTATION_90, new Point(0, 2));
+		images.put(SquareSymmetry.ROTATION_180, new Point(2, 3));
+		images.put(SquareSymmetry.ROTATION_270, new Point(3, 1));
+		images.put(SquareSymmetry.MAJOR_DIAGONAL_REFLECTION, new Point(0, 1));
+		images.put(SquareSymmetry.MINOR_DIAGONAL_REFLECTION, new Point(3, 2));
 	}
-	private Point transform(Point p, SquareTransformation t) {
+	private Point transform(Point p, SquareSymmetry t) {
 		return new Point(t.transformX(p.x, p.y, size), t.transformY(p.x, p.y, size));
 	}
 	@Test
 	public void testTransformations() {
-		for (SquareTransformation t: SquareTransformation.values())
+		for (SquareSymmetry t: SquareSymmetry.values())
 			assertEquals(transform(square, t), images.get(t), "Incorrect transformation for "+t);
 	}
 	@Test
 	public void testProperties() {
-		for (SquareTransformation t: SquareTransformation.values()) {
+		for (SquareSymmetry t: SquareSymmetry.values()) {
 			assertFalse(t.isPlayerSwitching());
-			assertEquals(t.isIdentity(), square.equals(transform(square, t)));
+			assertEquals(t.isIdentity(), t==SquareSymmetry.IDENTITY);
 		}
 	}
 	
 	@Test
 	public void testComposition() {
-		for (SquareTransformation t1: SquareTransformation.values()) {
-			for (SquareTransformation t2: SquareTransformation.values()) {
-				SquareTransformation comp=t1.compose(t2);
+		for (SquareSymmetry t1: SquareSymmetry.values()) {
+			for (SquareSymmetry t2: SquareSymmetry.values()) {
+				SquareSymmetry comp=t1.compose(t2);
 				assertEquals(transform(square, comp), transform(transform(square, t1), t2), "Incorrect "+t1+".compose("+t2+")");
 			}
 		}
