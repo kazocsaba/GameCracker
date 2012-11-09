@@ -10,6 +10,7 @@
 		<module>Game/API</module>
 		<module>Game/Testing</module>
 		<module>Game/TicTacToe</module>
+		<module>Game/Reversi</module>
 		<module>Graph/API</module>
 	</modules>
 
