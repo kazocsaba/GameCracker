@@ -18,6 +18,31 @@ public enum GameStatus {
 	/** Describes final position with a draw outcome. */
 	DRAW;
 	
+	/* A private, unmodified array of values. */
+	private static final GameStatus[] values=values();
+	
+	/**
+	 * Returns a status by its ordinal. This method is equivalent to {@code values()[ordinal]}, but avoids copying
+	 * the value array.
+	 * 
+	 * @param ordinal the index of the status to return
+	 * @return the {@code GameStatus} at the given index
+	 * @throws IndexOutOfBoundsException if {@code ordinal} is invalid
+	 */
+	public static GameStatus getByOrdinal(int ordinal) {
+		return values[ordinal];
+	}
+	
+	/**
+	 * Returns the number of constants defined in this enumeration. The return value is the same as
+	 * {@code values().length}.
+	 * 
+	 * @return the number of {@code GameStatus} constants
+	 */
+	public static int getCount() {
+		return values.length;
+	}
+	
 	/**
 	 * Returns {@code true} if this status describes a final position, and {@code false} otherwise.
 	 *
