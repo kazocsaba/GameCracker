@@ -29,7 +29,7 @@ public class Reversi4Position extends ReversiPosition<Reversi4Position, Reversi4
 		@Override
 		public Reversi4Position readPosition(DataInput in) throws IOException {
 			int statusOrdinal=in.readByte() & 0xFF;
-			if (statusOrdinal<0 || statusOrdinal>=GameStatus.VALUES.size()) throw new InconsistencyError("Invalid GameStatus ordinal: "+statusOrdinal);
+			if (statusOrdinal<0 || statusOrdinal>=GameStatus.getCount()) throw new InconsistencyError("Invalid GameStatus ordinal: "+statusOrdinal);
 			return new Reversi4Position(GameStatus.getByOrdinal(statusOrdinal), ReversiBoard.read(4, in));
 		}
 	};
