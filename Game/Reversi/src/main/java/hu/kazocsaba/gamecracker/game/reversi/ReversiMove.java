@@ -11,7 +11,7 @@ public abstract class ReversiMove<M extends ReversiMove<M>> extends Move<M, Swit
 	private final byte data;
 	
 	ReversiMove(int x, int y) {
-		data = (byte)(x | (y<<8));
+		data = (byte)(x | (y<<4));
 	}
 	
 	/**
@@ -29,7 +29,7 @@ public abstract class ReversiMove<M extends ReversiMove<M>> extends Move<M, Swit
 	 * @return the index of the row where the move is made
 	 */
 	public final int getY() {
-		return data & 0xF0;
+		return (data & 0xF0) >> 4;
 	}
 
 	@Override
@@ -45,6 +45,11 @@ public abstract class ReversiMove<M extends ReversiMove<M>> extends Move<M, Swit
 		final ReversiMove<M> other = (ReversiMove<M>)obj;
 		if (this.data != other.data) return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf((char)('a'+getX()))+String.valueOf((char)('1'+getY()));
 	}
 	
 }

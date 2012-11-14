@@ -1,5 +1,9 @@
 package hu.kazocsaba.gamecracker.game.reversi;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import hu.kazocsaba.gamecracker.InconsistencyError;
 import hu.kazocsaba.gamecracker.game.Player;
 
 /**
@@ -134,4 +138,43 @@ class ReversiBoard {
 		return false;
 	}
 	
+	// Package-private functions for serialization
+
+	static int getMaxSerializedSize() {
+		return 8*2;
+	}
+
+	void write(DataOutput out) throws IOException {
+		out.writeLong(boardData1);
+		out.writeLong(boardData2);
+	}
+	
+	static ReversiBoard read(int boardSize, DataInput in) throws IOException {
+		ReversiBoard board=new ReversiBoard();
+		board.boardData1=in.readLong();
+		board.boardData2=in.readLong();
+		long validMask;
+		long centerMask;
+		switch (boardSize) {
+			case 4:
+				validMask=  0b00001111_00001111_00001111_00001111L;
+				centerMask= 0b00000000_00000110_00000110_00000000L;
+				break;
+			case 6:
+				validMask=  0b00111111_00111111_00111111_00111111_00111111_00111111L;
+				centerMask= 0b00000000_00000000_00001100_00001100_00000000_00000000L;
+				break;
+			case 8:
+				validMask=  0b11111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111L;
+				centerMask= 0b00000000_00000000_00000000_00011000_00011000_00000000_00000000_00000000L;
+				break;
+			default:
+				throw new AssertionError();
+		}
+		// check that there are no pieces outside the board
+		if ((board.boardData1 & ~validMask)!=0) throw new InconsistencyError("Invalid board (piece out of bounds)");
+		// check that there are pieces in the center
+		if ((board.boardData1 & centerMask)!=centerMask) throw new InconsistencyError("Invalid board (empty cell in center)");
+		return board;
+	}
 }

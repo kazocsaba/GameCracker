@@ -1,18 +1,19 @@
 package hu.kazocsaba.gamecracker.game.reversi;
 
-import hu.kazocsaba.gamecracker.game.Game;
+import hu.kazocsaba.gamecracker.game.CategoryFunction;
 import hu.kazocsaba.gamecracker.game.GameStatus;
 import hu.kazocsaba.gamecracker.game.Player;
-import hu.kazocsaba.gamecracker.game.SwitchableSquareSymmetry;
+import hu.kazocsaba.gamecracker.game.PositionSerializer;
 
 /**
  *
  * @author Kazó Csaba
  */
-public class Reversi4 extends Game<Reversi4Position, Reversi4Move, SwitchableSquareSymmetry> {
+public class Reversi4 extends Reversi<Reversi4Position, Reversi4Move> {
 	private final Reversi4Position initial;
 
 	public Reversi4() {
+		super(4);
 		ReversiBoard board=new ReversiBoard();
 		board.setCell(2, 2, Player.WHITE);
 		board.setCell(1, 1, Player.WHITE);
@@ -29,6 +30,16 @@ public class Reversi4 extends Game<Reversi4Position, Reversi4Move, SwitchableSqu
 	@Override
 	public String getName() {
 		return "Reversi 4x4";
+	}
+
+	@Override
+	public PositionSerializer<Reversi4Position> getPositionSerializer() {
+		return Reversi4Position.SERIALIZER;
+	}
+
+	@Override
+	public CategoryFunction<Reversi4Position> getCategoryFunction() {
+		return Reversi4Position.CATEGORY_FUNCTION;
 	}
 
 }

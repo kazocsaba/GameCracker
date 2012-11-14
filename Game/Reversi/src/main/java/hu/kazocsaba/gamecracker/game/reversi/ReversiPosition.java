@@ -59,7 +59,7 @@ public abstract class ReversiPosition<P extends ReversiPosition<P,M>, M extends 
 		final int y = move.getY();
 		final Player player=status.getCurrentPlayer();
 		
-		if (board.getCell(x, y)!=null) throw new IllegalArgumentException("Invalid move: "+move);
+		if (board.getCell(x, y)!=null) throw new IllegalArgumentException("Invalid move: "+move+" (cell not empty)");
 		
 		boolean moveValid=false;
 		
