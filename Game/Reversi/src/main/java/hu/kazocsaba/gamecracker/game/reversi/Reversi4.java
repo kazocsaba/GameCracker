@@ -1,9 +1,13 @@
 package hu.kazocsaba.gamecracker.game.reversi;
 
+import javax.swing.JFrame;
 import hu.kazocsaba.gamecracker.game.CategoryFunction;
+import hu.kazocsaba.gamecracker.game.GameComponent;
 import hu.kazocsaba.gamecracker.game.GameStatus;
 import hu.kazocsaba.gamecracker.game.Player;
 import hu.kazocsaba.gamecracker.game.PositionSerializer;
+import hu.kazocsaba.gamecracker.game.SquareSymmetry;
+import hu.kazocsaba.gamecracker.game.SwitchableSquareSymmetry;
 
 /**
  *
@@ -42,4 +46,8 @@ public class Reversi4 extends Reversi<Reversi4Position, Reversi4Move> {
 		return Reversi4Position.CATEGORY_FUNCTION;
 	}
 
+	@Override
+	public GameComponent<Reversi4Position, Reversi4Move, SwitchableSquareSymmetry> createComponent() {
+		return new Reversi4Component(getInitialPosition());
+	}
 }

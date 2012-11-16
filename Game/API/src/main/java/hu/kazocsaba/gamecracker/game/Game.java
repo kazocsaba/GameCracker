@@ -59,4 +59,11 @@ public abstract class Game<P extends Position<P,M,T>, M extends Move<M,T>, T ext
 		return getName();
 	}
 	
+	/**
+	 * Creates a new graphical component for this game. The new component initially shows the
+	 * {@link #getInitialPosition() initial position} of this game.
+	 * 
+	 * @return a new game component
+	 */
+	public abstract GameComponent<P,M,T> createComponent();
 }

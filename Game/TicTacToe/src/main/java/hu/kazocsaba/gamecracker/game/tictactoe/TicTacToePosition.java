@@ -263,4 +263,15 @@ public class TicTacToePosition extends Position<TicTacToePosition, TicTacToeMove
 		sb.append(']');
 		return sb.toString();
 	}
+	
+	/**
+	 * Returns the player occupying a cell.
+	 * 
+	 * @param x the column of the cell
+	 * @param y the row of the cell
+	 * @return the player occupying the cell, or {@code null} if the cell is empty
+	 */
+	public Player getCell(int x, int y) {
+		return board[x][y];
+	}
 }

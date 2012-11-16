@@ -1,7 +1,9 @@
 package hu.kazocsaba.gamecracker.game.tictactoe;
 
+import javax.swing.JFrame;
 import hu.kazocsaba.gamecracker.game.CategoryFunction;
 import hu.kazocsaba.gamecracker.game.Game;
+import hu.kazocsaba.gamecracker.game.GameComponent;
 import hu.kazocsaba.gamecracker.game.PositionSerializer;
 import hu.kazocsaba.gamecracker.game.SquareSymmetry;
 import hu.kazocsaba.gamecracker.game.TransformationSerializer;
@@ -43,5 +45,8 @@ public class TicTacToe extends Game<TicTacToePosition, TicTacToeMove, SquareSymm
 		return SquareSymmetry.SERIALIZER;
 	}
 
-
+	@Override
+	public GameComponent<TicTacToePosition, TicTacToeMove, SquareSymmetry> createComponent() {
+		return new TicTacToeComponent(getInitialPosition());
+	}
 }

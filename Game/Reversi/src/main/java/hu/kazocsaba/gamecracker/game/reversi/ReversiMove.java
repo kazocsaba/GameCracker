@@ -49,7 +49,7 @@ public abstract class ReversiMove<M extends ReversiMove<M>> extends Move<M, Swit
 
 	@Override
 	public String toString() {
-		return String.valueOf((char)('a'+getX()))+String.valueOf((char)('1'+getY()));
+		return String.format("%c%d", 'a'+getX(), getY()+1);
 	}
 	
 }

@@ -51,7 +51,7 @@ public class TicTacToeMove extends Move<TicTacToeMove, SquareSymmetry> {
 
 	@Override
 	public String toString() {
-		return String.format("%s%s", 'a'+x, y+1);
+		return String.format("%c%d", 'a'+x, y+1);
 	}
 
 	@Override
