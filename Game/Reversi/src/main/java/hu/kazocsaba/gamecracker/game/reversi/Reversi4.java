@@ -1,12 +1,10 @@
 package hu.kazocsaba.gamecracker.game.reversi;
 
-import javax.swing.JFrame;
 import hu.kazocsaba.gamecracker.game.CategoryFunction;
 import hu.kazocsaba.gamecracker.game.GameComponent;
 import hu.kazocsaba.gamecracker.game.GameStatus;
 import hu.kazocsaba.gamecracker.game.Player;
 import hu.kazocsaba.gamecracker.game.PositionSerializer;
-import hu.kazocsaba.gamecracker.game.SquareSymmetry;
 import hu.kazocsaba.gamecracker.game.SwitchableSquareSymmetry;
 
 /**

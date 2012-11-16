@@ -1,6 +1,5 @@
 package hu.kazocsaba.gamecracker.game.tictactoe;
 
-import javax.swing.JFrame;
 import hu.kazocsaba.gamecracker.game.CategoryFunction;
 import hu.kazocsaba.gamecracker.game.Game;
 import hu.kazocsaba.gamecracker.game.GameComponent;

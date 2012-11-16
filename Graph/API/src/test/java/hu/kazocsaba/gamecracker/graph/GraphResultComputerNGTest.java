@@ -1,7 +1,7 @@
 package hu.kazocsaba.gamecracker.graph;
 
-import hu.kazocsaba.gamecracker.game.Player;
 import java.util.Arrays;
+import hu.kazocsaba.gamecracker.game.Player;
 import static org.testng.Assert.*;
 
 /**
