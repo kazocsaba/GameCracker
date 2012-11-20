@@ -30,6 +30,12 @@ public class TicTacToeNGTest extends AbstractGameTest<TicTacToe, TicTacToePositi
 	}
 	
 	@Test
+	public void testMoveParsing() {
+		for (int x=0; x<3; x++) for (int y=0; y<3; y++)
+			assertEquals(game.parseMove(TicTacToeMove.get(x, y).toString()), TicTacToeMove.get(x, y));
+	}
+	
+	@Test
 	public void testTransformations() {
 		TicTacToePosition position=game.getInitialPosition();
 		

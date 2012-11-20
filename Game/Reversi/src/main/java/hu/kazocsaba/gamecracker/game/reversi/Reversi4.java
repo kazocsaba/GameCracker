@@ -48,4 +48,10 @@ public class Reversi4 extends Reversi<Reversi4Position, Reversi4Move> {
 	public GameComponent<Reversi4Position, Reversi4Move, SwitchableSquareSymmetry> createComponent() {
 		return new Reversi4Component(getInitialPosition());
 	}
+
+	@Override
+	Reversi4Move getMove(int x, int y) {
+		return Reversi4Move.get(x, y);
+	}
+	
 }

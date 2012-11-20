@@ -53,6 +53,16 @@ public abstract class Game<P extends Position<P,M,T>, M extends Move<M,T>, T ext
 	 * @return the name of this game
 	 */
 	public abstract String getName();
+	
+	/**
+	 * Returns the move represented by the specified string. This function is able to parse at least the {@code String}s
+	 * returned by the {@code toString} functions of the game's moves.
+	 * 
+	 * @param s the string to parse
+	 * @return the move represented by the argument
+	 * @throws IllegalArgumentException if the string cannot be interpreted as a move of this game
+	 */
+	public abstract M parseMove(String s);
 
 	@Override
 	public String toString() {

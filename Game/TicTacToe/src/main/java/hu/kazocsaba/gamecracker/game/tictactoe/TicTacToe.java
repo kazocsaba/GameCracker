@@ -48,4 +48,15 @@ public class TicTacToe extends Game<TicTacToePosition, TicTacToeMove, SquareSymm
 	public GameComponent<TicTacToePosition, TicTacToeMove, SquareSymmetry> createComponent() {
 		return new TicTacToeComponent(getInitialPosition());
 	}
+
+	@Override
+	public TicTacToeMove parseMove(String s) {
+		if (s.length()!=2) throw new IllegalArgumentException("Only 2-character strings can be parsed");
+		int x=s.charAt(0)-'a';
+		int y=s.charAt(1)-'1';
+		if (x<0 || x>=3) throw new IllegalArgumentException("Invalid column character: '"+x+"'");
+		if (y<0 || y>=3) throw new IllegalArgumentException("Invalid row character: '"+y+"'");
+		return TicTacToeMove.get(x, y);
+	}
+	
 }

@@ -48,4 +48,10 @@ public class Reversi6 extends Reversi<Reversi6Position, Reversi6Move> {
 	public GameComponent<Reversi6Position, Reversi6Move, SwitchableSquareSymmetry> createComponent() {
 		return new Reversi6Component(getInitialPosition());
 	}
+
+	@Override
+	Reversi6Move getMove(int x, int y) {
+		return Reversi6Move.get(x, y);
+	}
+	
 }

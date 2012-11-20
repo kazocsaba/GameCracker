@@ -20,6 +20,14 @@ public abstract class ReversiTest<G extends Reversi<P, M>, P extends ReversiPosi
 	}
 	
 	@Test
+	public void testMoveParsing() {
+		for (M move: getBasicWinGame())
+			assertEquals(game.parseMove(move.toString()), move);
+		for (M move: getDrawGame())
+			assertEquals(game.parseMove(move.toString()), move);
+	}
+	
+	@Test
 	public void testBasicGame() {
 		P pos=game.getInitialPosition();
 		for (M move: getBasicWinGame()) {
