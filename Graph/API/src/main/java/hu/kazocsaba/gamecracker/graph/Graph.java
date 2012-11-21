@@ -1,19 +1,22 @@
 package hu.kazocsaba.gamecracker.graph;
 
 import hu.kazocsaba.gamecracker.game.Game;
+import hu.kazocsaba.gamecracker.game.Move;
+import hu.kazocsaba.gamecracker.game.Position;
+import hu.kazocsaba.gamecracker.game.Transformation;
 
 /**
  * A game state graph.
  *
  * @author Kazó Csaba
  */
-public abstract class Graph {
+public abstract class Graph<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> {
 	/**
 	 * Returns the game whose states this graph contains.
 	 *
 	 * @return the game
 	 */
-	public abstract Game getGame();
+	public abstract Game<P,M,T> getGame();
 
 	/**
 	 * Expands the graph by adding the edge corresponding to a move from an existing node. The graph must not already
@@ -28,7 +31,7 @@ public abstract class Graph {
 	 * ({@code moveIndex < 0 || moveIndex >= node.getChildCount()})
 	 * @throws IllegalArgumentException if {@code node.getChild(moveIndex) != null}
 	 */
-	public abstract Node expand(NormalNode node, int moveIndex);
+	public abstract Node<P,M,T> expand(NormalNode<P,M,T> node, int moveIndex);
 	
 	/**
 	 * Returns the root node of the graph. The root is always a normal node containing the initial position
@@ -36,5 +39,5 @@ public abstract class Graph {
 	 * 
 	 * @return the root node
 	 */
-	public abstract NormalNode getRoot();
+	public abstract NormalNode<P,M,T> getRoot();
 }

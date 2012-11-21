@@ -1,6 +1,8 @@
 package hu.kazocsaba.gamecracker.graph;
 
+import hu.kazocsaba.gamecracker.game.Move;
 import hu.kazocsaba.gamecracker.game.Position;
+import hu.kazocsaba.gamecracker.game.Transformation;
 
 /**
  * A node in a graph. Each node is either a {@link NormalNode normal} or a {@link TransformationNode transformation}
@@ -11,7 +13,7 @@ import hu.kazocsaba.gamecracker.game.Position;
  *
  * @author Kazó Csaba
  */
-public interface Node {
+public interface Node<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> {
 	/**
 	 * Returns what is currently known of the result of the state contained in this node. It is the responsibility of the
 	 * graph to update the result of the nodes as subgraphs are expanded and more information becomes available.
@@ -25,7 +27,7 @@ public interface Node {
 	 *
 	 * @return the position of this node
 	 */
-	public Position getPosition();
+	public P getPosition();
 	
 	/**
 	 * Returns the number of parent nodes. Parents are the nodes that have an outgoing edge leading to
@@ -43,5 +45,5 @@ public interface Node {
 	 * @throws IndexOutOfBoundsException if {@code index} is out of range
 	 * ({@code index < 0 || index >= getParentCount()}) 
 	 */
-	public Node getParent(int index);
+	public Node<P,M,T> getParent(int index);
 }
