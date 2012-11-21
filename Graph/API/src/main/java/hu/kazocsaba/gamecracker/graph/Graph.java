@@ -29,4 +29,12 @@ public abstract class Graph {
 	 * @throws IllegalArgumentException if {@code node.getChild(moveIndex) != null}
 	 */
 	public abstract Node expand(NormalNode node, int moveIndex);
+	
+	/**
+	 * Returns the root node of the graph. The root is always a normal node containing the initial position
+	 * of the game.
+	 * 
+	 * @return the root node
+	 */
+	public abstract NormalNode getRoot();
 }
