@@ -8,12 +8,16 @@ import hu.kazocsaba.gamecracker.game.PositionSerializer;
 import hu.kazocsaba.gamecracker.game.SwitchableSquareSymmetry;
 
 /**
- *
+ * Reversi on a 6x6 board.
+ * 
  * @author Kazó Csaba
  */
 public class Reversi6 extends Reversi<Reversi6Position, Reversi6Move> {
 	private final Reversi6Position initial;
 
+	/**
+	 * Creates a new instance.
+	 */
 	public Reversi6() {
 		super(6);
 		ReversiBoard board=new ReversiBoard();

@@ -5,6 +5,7 @@ import hu.kazocsaba.gamecracker.game.SwitchableSquareSymmetry;
 
 /**
  * A move in Reversi.
+ * 
  * @author Kazó Csaba
  */
 public abstract class ReversiMove<M extends ReversiMove<M>> extends Move<M, SwitchableSquareSymmetry> {

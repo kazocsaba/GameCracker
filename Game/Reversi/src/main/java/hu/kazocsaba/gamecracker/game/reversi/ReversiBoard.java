@@ -8,6 +8,7 @@ import hu.kazocsaba.gamecracker.game.Player;
 
 /**
  * A board state in Reversi.
+ * 
  * @author Kazó Csaba
  */
 class ReversiBoard {
@@ -21,24 +22,52 @@ class ReversiBoard {
 	 */
 	private long boardData1, boardData2;
 
+	/**
+	 * Creates an empty board.
+	 */
 	public ReversiBoard() {
 	}
 
+	/**
+	 * Creaets a board with the same contents as the argument.
+	 * 
+	 * @param board the board to copy
+	 */
 	public ReversiBoard(ReversiBoard board) {
 		this.boardData1 = board.boardData1;
 		this.boardData2 = board.boardData2;
 	}
 	
+	/**
+	 * Returns the number of tokens on the board.
+	 * 
+	 * @return the total number of tokens on the board
+	 */
 	int getTokenCount() {
 		return Long.bitCount(boardData1);
 	}
 	
+	/**
+	 * Returns the contents of a cell.
+	 * 
+	 * @param x the column index of the cell
+	 * @param y the row index of the cell
+	 * @return the player occupying the cell, or {@code null} if the cell is empty
+	 */
 	public Player getCell(int x, int y) {
 		long mask=1L << (x+8*y);
 		if ((boardData1 & mask)==0) return null;
 		if ((boardData2 & mask)==0) return Player.WHITE;
 		return Player.BLACK;
 	}
+	
+	/**
+	 * Sets the contents of a cell.
+	 * 
+	 * @param x the column index of the cell
+	 * @param y the row index of the cell
+	 * @param player the type of token to assign to the cell, if {@code null}, the cell will become empty
+	 */
 	public void setCell(int x, int y, Player player) {
 		long mask=1L << (x+8*y);
 		if (player==null) {
@@ -68,6 +97,15 @@ class ReversiBoard {
 		return boardData1 == other.boardData1 && boardData2 == other.boardData2;
 	}
 	
+	/**
+	 * Checks if a move is valid.
+	 * 
+	 * @param player the player who moves
+	 * @param x the x coordinate of the move
+	 * @param y the y coordinate of the move
+	 * @param size the size of the board
+	 * @return {@code true} if the move is valid, {@code false} otherwise
+	 */
 	boolean isMoveValid(Player player, int x, int y, int size) {
 		if (getCell(x, y)!=null) return false;
 		

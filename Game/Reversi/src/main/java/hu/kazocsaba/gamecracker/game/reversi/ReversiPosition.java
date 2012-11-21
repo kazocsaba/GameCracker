@@ -12,6 +12,7 @@ import hu.kazocsaba.gamecracker.game.SwitchableSquareSymmetry;
 
 /**
  * A Reversi position.
+ * 
  * @author Kazó Csaba
  */
 public abstract class ReversiPosition<P extends ReversiPosition<P,M>, M extends ReversiMove<M>> extends Position<P, M, SwitchableSquareSymmetry> {

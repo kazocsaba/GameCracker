@@ -9,7 +9,8 @@ import hu.kazocsaba.gamecracker.game.GameStatus;
 import hu.kazocsaba.gamecracker.game.PositionSerializer;
 
 /**
- *
+ * A position of 4x4 Reversi.
+ * 
  * @author Kazó Csaba
  */
 public class Reversi4Position extends ReversiPosition<Reversi4Position, Reversi4Move> {
