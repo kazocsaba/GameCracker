@@ -12,6 +12,7 @@
 		<module>Game/TicTacToe</module>
 		<module>Game/Reversi</module>
 		<module>Graph/API</module>
+		<module>Graph/Memory</module>
 	</modules>
 
 	<name>GameCracker Parent</name>
