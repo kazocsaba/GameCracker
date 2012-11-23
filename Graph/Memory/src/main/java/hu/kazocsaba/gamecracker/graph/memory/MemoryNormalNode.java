@@ -3,7 +3,6 @@ package hu.kazocsaba.gamecracker.graph.memory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import hu.kazocsaba.gamecracker.game.GameStatus;
 import hu.kazocsaba.gamecracker.game.Move;
 import hu.kazocsaba.gamecracker.game.Position;
@@ -17,14 +16,11 @@ import hu.kazocsaba.gamecracker.graph.NormalNode;
  *
  * @author Kazó Csaba
  */
-class MemoryNormalNode<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> extends NormalNode<P,M,T> {
-	private GraphResult result;
-	private P position;
-	private List<Node<P,M,T>> parents=new ArrayList<>(2);
-	private List<Node<P,M,T>> children;
+class MemoryNormalNode<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> extends MemoryNode<P,M,T> implements NormalNode<P,M,T> {
+	private final List<Node<P,M,T>> children;
 
 	MemoryNormalNode(P position) {
-		this.position=Objects.requireNonNull(position);
+		super(position);
 		int childCount=position.getMoves().size();
 		GameStatus status=position.getStatus();
 		if (childCount==0) {
@@ -40,10 +36,7 @@ class MemoryNormalNode<P extends Position<P,M,T>, M extends Move<M,T>, T extends
 
 	void setChild(int index, Node<P,M,T> node) {
 		children.set(index, node);
-		if (node instanceof MemoryNormalNode)
-			((MemoryNormalNode<P,M,T>)node).parents.add(this);
-		else
-			((MemoryTransformationNode<P,M,T>)node).parents.add(this);
+		((MemoryNode<P,M,T>)node).parents.add(this);
 		if (!result.isKnown()) {
 			recomputeResult(this);
 		}
@@ -118,26 +111,6 @@ class MemoryNormalNode<P extends Position<P,M,T>, M extends Move<M,T>, T extends
 	@Override
 	public Node<P,M,T> getChild(int index) {
 		return children.get(index);
-	}
-
-	@Override
-	public GraphResult getResult() {
-		return result;
-	}
-
-	@Override
-	public P getPosition() {
-		return position;
-	}
-
-	@Override
-	public int getParentCount() {
-		return parents.size();
-	}
-
-	@Override
-	public Node<P,M,T> getParent(int index) {
-		return parents.get(index);
 	}
 
 }

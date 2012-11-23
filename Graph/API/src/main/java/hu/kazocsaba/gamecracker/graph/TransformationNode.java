@@ -9,13 +9,13 @@ import hu.kazocsaba.gamecracker.game.Transformation;
  *
  * @author Kazó Csaba
  */
-public abstract class TransformationNode<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> implements Node<P,M,T> {
+public interface TransformationNode<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> extends Node<P,M,T> {
 	/**
 	 * Returns the transformation that needs to be applied to the position in this node.
 	 *
 	 * @return the transformation of this node
 	 */
-	public abstract T getTransformation();
+	public T getTransformation();
 
 	/**
 	 * Returns the node this transformation node references. Transforming this node's position with this node's
@@ -24,5 +24,5 @@ public abstract class TransformationNode<P extends Position<P,M,T>, M extends Mo
 	 *
 	 * @return the node referenced by this transformation node
 	 */
-	public abstract NormalNode<P,M,T> getLinkedNode();
+	public NormalNode<P,M,T> getLinkedNode();
 }

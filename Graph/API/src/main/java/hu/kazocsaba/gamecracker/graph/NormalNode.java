@@ -10,7 +10,7 @@ import hu.kazocsaba.gamecracker.game.Transformation;
  *
  * @author Kazó Csaba
  */
-public abstract class NormalNode<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> implements Node<P,M,T> {
+public interface NormalNode<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> extends Node<P,M,T> {
 	/**
 	 * Returns the number of child nodes. This function returns the same value as
 	 * {@code getPosition().getMoves().size()}, regardless of how many of the child nodes are actually present in the
@@ -18,7 +18,7 @@ public abstract class NormalNode<P extends Position<P,M,T>, M extends Move<M,T>,
 	 *
 	 * @return the number of child nodes
 	 */
-	public abstract int getChildCount();
+	public int getChildCount();
 
 	/**
 	 * Returns the child node at the specified index. If the requested node is not present in the graph, {@code null} is
@@ -28,5 +28,5 @@ public abstract class NormalNode<P extends Position<P,M,T>, M extends Move<M,T>,
 	 * @return a child node, or {@code null} if the child at {@code index} is not present in the graph
 	 * @throws IndexOutOfBoundsException if {@code index} is out of range ({@code index < 0 || index >= getChildCount()})
 	 */
-	public abstract Node<P,M,T> getChild(int index);
+	public Node<P,M,T> getChild(int index);
 }
