@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * A facility for reading and writing positions.
  * 
- * @param <P> the concrete Position type
+ * @param <P> the concrete position type
  * @author Kazó Csaba
  */
 public abstract class PositionSerializer<P extends Position<P,?,?>> {

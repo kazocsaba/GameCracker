@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * A facility for reading and writing transformation.
  * 
- * @param <P> the concrete Position type
+ * @param <T> the concrete transformation type
  * @author Kazó Csaba
  */
 public abstract class TransformationSerializer<T extends Transformation<T>> {	

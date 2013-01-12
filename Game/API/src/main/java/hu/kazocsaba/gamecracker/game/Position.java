@@ -8,9 +8,9 @@ import java.util.List;
  * <p>
  * Implementations of this class should be immutable.
  * 
- * @param <P> the concrete Position type
- * @param <M> the concrete Move type
- * @param <T> the concrete Transformation type
+ * @param <P> the concrete position type
+ * @param <M> the concrete move type
+ * @param <T> the concrete transformation type
  * @author Kazó Csaba
  */
 public abstract class Position<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> {

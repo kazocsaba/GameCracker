@@ -4,9 +4,9 @@ package hu.kazocsaba.gamecracker.game;
  * A game. This class is used to access the initial position, and it also provides I/O functions on the game objects:
  * the {@link Position positions}, {@link Move moves}, and {@link Transformation transformations}.
  * 
- * @param <P> the concrete Position type
- * @param <M> the concrete Move type
- * @param <T> the concrete Transformation type
+ * @param <P> the concrete position type
+ * @param <M> the concrete move type
+ * @param <T> the concrete transformation type
  * @author Kazó Csaba
  */
 public abstract class Game<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> {

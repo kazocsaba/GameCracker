@@ -5,7 +5,7 @@ package hu.kazocsaba.gamecracker.game;
  * <p>
  * Implementations of this interface should be enumeration types.
  *
- * @param <T> the transformation type subclass
+ * @param <T> the concrete transformation type
  * @author Kazó Csaba
  */
 public interface Transformation<T extends Transformation<T>> {

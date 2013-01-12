@@ -190,7 +190,7 @@ public enum SquareSymmetry implements SquareBoardTransformation<SquareSymmetry> 
 		
 	},
 	/**
-	 * Rotation by 90°: (i, j) -> (n-j, i).
+	 * Rotation by 270°: (i, j) -> (n-j, i).
 	 */
 	ROTATION_270 {
 

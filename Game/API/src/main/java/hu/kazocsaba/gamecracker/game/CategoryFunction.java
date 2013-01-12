@@ -6,7 +6,7 @@ package hu.kazocsaba.gamecracker.game;
  * <p>
  * Implementations must be immutable, therefore they are thread-safe.
  * 
- * @param <P> the concrete Position type
+ * @param <P> the concrete position type
  * @author Kazó Csaba
  */
 public abstract class CategoryFunction<P extends Position<P,?,?>> {

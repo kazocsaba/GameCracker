@@ -10,6 +10,10 @@ import java.awt.Component;
  * Functions of this class should only be called on the Event Dispatch Thread (EDT). If a {@code MoveReceiver}
  * is registered, its {@code onMove} function is also only called on the EDT, and it is safe to alter the state of
  * the game component from this callback function.
+ * 
+ * @param <P> the concrete position type
+ * @param <M> the concrete move type
+ * @param <T> the concrete transformation type
  * @author Kazó Csaba
  */
 public abstract class GameComponent<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> {

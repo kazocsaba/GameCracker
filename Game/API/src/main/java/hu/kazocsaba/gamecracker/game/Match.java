@@ -6,9 +6,9 @@ import java.util.Iterator;
  * A sequence of valid moves from an initial position (not necessarily the {@link Game#getInitialPosition() game's
  * initial position}).
  * 
- * @param <P> the concrete Position type
- * @param <M> the concrete Move type
- * @param <T> the concrete Transformation type
+ * @param <P> the concrete position type
+ * @param <M> the concrete move type
+ * @param <T> the concrete transformation type
  * @author Kazó Csaba
  */
 public interface Match<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> extends Iterable<Match.Point<P,M,T>> {

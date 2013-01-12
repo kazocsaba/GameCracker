@@ -4,6 +4,7 @@ package hu.kazocsaba.gamecracker.game;
  * A transformation that can be applied to a square board. Provides functions to apply the
  * transformation to the cells of a board of any size.
  * 
+ * @param <T> the concrete transformation type
  * @author Kazó Csaba
  */
 public interface SquareBoardTransformation<T extends SquareBoardTransformation<T>> extends Transformation<T> {

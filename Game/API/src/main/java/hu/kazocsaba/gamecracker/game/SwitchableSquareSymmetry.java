@@ -14,6 +14,7 @@ import hu.kazocsaba.gamecracker.InconsistencyError;
  * <p>
  * These transformations are analogous to {@link SquareSymmetry}, but each of them
  * has a variant that swaps the two players.
+ * 
  * @author Kazó Csaba
  */
 public enum SwitchableSquareSymmetry implements SquareBoardTransformation<SwitchableSquareSymmetry> {
@@ -38,6 +39,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 
 	},
+	/**
+	 * The identity transformation: (i, j) -> (i, j) with player switching.
+	 */
 	IDENTITY_SWITCH(SquareSymmetry.IDENTITY) {
 
 		@Override
@@ -51,6 +55,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Reflection in the horizontal direction (along the vertical axis): (i, j) -> (n-i, j).
+	 */
 	HORIZONTAL_REFLECTION(SquareSymmetry.HORIZONTAL_REFLECTION) {
 
 		@Override
@@ -64,6 +71,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Reflection in the horizontal direction (along the vertical axis): (i, j) -> (n-i, j) with player switching.
+	 */
 	HORIZONTAL_REFLECTION_SWITCH(SquareSymmetry.HORIZONTAL_REFLECTION) {
 		
 		@Override
@@ -77,6 +87,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Reflection in the vertical direction (along the horizontal axis): (i, j) -> (i, n-j).
+	 */
 	VERTICAL_REFLECTION(SquareSymmetry.VERTICAL_REFLECTION) {
 		
 		@Override
@@ -90,6 +103,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Reflection in the vertical direction (along the horizontal axis): (i, j) -> (i, n-j) with player switching.
+	 */
 	VERTICAL_REFLECTION_SWITCH(SquareSymmetry.VERTICAL_REFLECTION) {
 		
 		@Override
@@ -103,6 +119,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Rotation by 90°: (i, j) -> (j, n-i).
+	 */
 	ROTATION_90(SquareSymmetry.ROTATION_90) {
 		
 		@Override
@@ -116,6 +135,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Rotation by 90°: (i, j) -> (j, n-i) with player switching.
+	 */
 	ROTATION_90_SWITCH(SquareSymmetry.ROTATION_90) {
 		
 		@Override
@@ -129,6 +151,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Rotation by 180°: (i, j) -> (n-i, n-j).
+	 */
 	ROTATION_180(SquareSymmetry.ROTATION_180) {
 		
 		@Override
@@ -142,6 +167,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Rotation by 180°: (i, j) -> (n-i, n-j) with player switching.
+	 */
 	ROTATION_180_SWITCH(SquareSymmetry.ROTATION_180) {
 		
 		@Override
@@ -155,6 +183,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Rotation by 270°: (i, j) -> (n-j, i).
+	 */
 	ROTATION_270(SquareSymmetry.ROTATION_270) {
 		
 		@Override
@@ -168,6 +199,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Rotation by 270°: (i, j) -> (n-j, i) with player switching.
+	 */
 	ROTATION_270_SWITCH(SquareSymmetry.ROTATION_270) {
 		
 		@Override
@@ -181,6 +215,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Reflection along the major diagonal: (i, j) -> (j, i).
+	 */
 	MAJOR_DIAGONAL_REFLECTION(SquareSymmetry.MAJOR_DIAGONAL_REFLECTION) {
 		
 		@Override
@@ -194,6 +231,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Reflection along the major diagonal: (i, j) -> (j, i) with player switching.
+	 */
 	MAJOR_DIAGONAL_REFLECTION_SWITCH(SquareSymmetry.MAJOR_DIAGONAL_REFLECTION) {
 		
 		@Override
@@ -207,6 +247,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Reflection along the minor diagonal: (i, j) -> (n-j, n-i).
+	 */
 	MINOR_DIAGONAL_REFLECTION(SquareSymmetry.MINOR_DIAGONAL_REFLECTION) {
 		
 		@Override
@@ -220,6 +263,9 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 		}
 		
 	},
+	/**
+	 * Reflection along the minor diagonal: (i, j) -> (n-j, n-i) with player switching.
+	 */
 	MINOR_DIAGONAL_REFLECTION_SWITCH(SquareSymmetry.MINOR_DIAGONAL_REFLECTION) {
 		
 		@Override
@@ -235,7 +281,7 @@ public enum SwitchableSquareSymmetry implements SquareBoardTransformation<Switch
 	},
 	;
 	/**
-	 * Serializer object for {@code SquareSymmetry} objects.
+	 * Serializer object for {@code SwitchableSquareSymmetry} objects.
 	 */
 	public static final TransformationSerializer<SwitchableSquareSymmetry> SERIALIZER=new TransformationSerializer<SwitchableSquareSymmetry>() {
 		// Avoid copying the array in values() by using our own instance
