@@ -1,18 +1,16 @@
 package hu.kazocsaba.gamecracker.graph.memory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import hu.kazocsaba.gamecracker.game.Game;
 import hu.kazocsaba.gamecracker.game.Move;
 import hu.kazocsaba.gamecracker.game.Position;
 import hu.kazocsaba.gamecracker.game.Transformation;
 import hu.kazocsaba.gamecracker.graph.Graph;
-import hu.kazocsaba.gamecracker.graph.Node;
-import hu.kazocsaba.gamecracker.graph.NormalNode;
-import hu.kazocsaba.gamecracker.graph.TransformationNode;
+import hu.kazocsaba.gamecracker.graph.GraphMatch;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * An entirely in-memory Graph implementation.
@@ -20,10 +18,10 @@ import hu.kazocsaba.gamecracker.graph.TransformationNode;
  * @author Kazó Csaba
  */
 public class MemoryGraph<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> extends Graph<P,M,T> {
-	private final Game<P,M,T> game;
-	private final MemoryNormalNode<P,M,T> root;
+	final Game<P,M,T> game;
+	final MemoryNormalNode<P,M,T> root;
 	private int size;
-	private final Map<Long, List<NormalNode<P,M,T>>> categories=new HashMap<>();
+	private final Map<Long, List<MemoryNormalNode<P,M,T>>> categories=new HashMap<>();
 
 	public MemoryGraph(Game<P,M,T> game) {
 		this.game = Objects.requireNonNull(game);
@@ -35,24 +33,16 @@ public class MemoryGraph<P extends Position<P,M,T>, M extends Move<M,T>, T exten
 	public Game<P,M,T> getGame() {
 		return game;
 	}
-
-	@Override
-	public NormalNode<P,M,T> getRoot() {
-		return root;
-	}
-
-	@Override
-	public Node<P,M,T> expand(NormalNode<P,M,T> node, int moveIndex) {
-		MemoryNormalNode<P,M,T> memnode=(MemoryNormalNode<P,M,T>)node;
-		if (memnode.getChild(moveIndex)!=null) throw new IllegalArgumentException("Move already expanded");
-		P nextPosition=node.getPosition().move(node.getPosition().getMoves().get(moveIndex));
+	MemoryNode<P,M,T> getNextNode(MemoryNormalNode<P,M,T> node, M move, int moveIndex) {
+		if (node.getChild(moveIndex)!=null) return node.getChild(moveIndex);
+		P nextPosition=node.position.move(move);
 		long category=game.getCategoryFunction().category(nextPosition);
 		
 		/*
 		 * We search the category list of the category of the new position, and try to find an equivalent position.
 		 */
-		Node<P,M,T> newNode=null;
-		List<NormalNode<P,M,T>> categoryList=categories.get(category);
+		MemoryNode<P,M,T> newNode=null;
+		List<MemoryNormalNode<P,M,T>> categoryList=categories.get(category);
 		if (categoryList==null) {
 			/*
 			 * This is a brand new category, there can be no match; we will need a new NormalNode.
@@ -60,10 +50,10 @@ public class MemoryGraph<P extends Position<P,M,T>, M extends Move<M,T>, T exten
 			categoryList=new ArrayList<>(4);
 			categories.put(category, categoryList);
 		} else {
-			NormalNode<P,M,T> match=null;
+			MemoryNormalNode<P,M,T> match=null;
 			T trans=null;
-			for (NormalNode<P,M,T> chainNode: categoryList) {
-				trans=nextPosition.getTransformationTo(chainNode.getPosition());
+			for (MemoryNormalNode<P,M,T> chainNode: categoryList) {
+				trans=nextPosition.getTransformationTo(chainNode.position);
 				if (trans!=null) {
 					match=chainNode;
 					break;
@@ -83,9 +73,9 @@ public class MemoryGraph<P extends Position<P,M,T>, M extends Move<M,T>, T exten
 					 * The transformation is not identity, we need a transformation node with trans. Before we create one,
 					 * let us check if a suitable transformation node parent of our match already exists.
 					 */
-					for (int i=0; i<match.getParentCount(); i++) {
-						Node<P,M,T> parent=match.getParent(i);
-						if (parent instanceof TransformationNode && parent.getPosition().equals(nextPosition)) {
+					for (int i=0; i<match.parents.size(); i++) {
+						MemoryNode<P,M,T> parent=match.parents.get(i);
+						if (parent instanceof MemoryTransformationNode && parent.position.equals(nextPosition)) {
 							/*
 							 * We have found the new position in the graph, in a transformation node.
 							 */
@@ -117,12 +107,17 @@ public class MemoryGraph<P extends Position<P,M,T>, M extends Move<M,T>, T exten
 		 * because it is an existing node found in the graph), this function will trigger a recalculation of the result
 		 * towards the root.
 		 */
-		memnode.setChild(moveIndex, newNode);
+		node.setChild(moveIndex, newNode);
 		return newNode;
 	}
 
 	public int size() {
 		return size;
 	}
-	
+
+	@Override
+	public GraphMatch<P, M, T> createMatch() {
+		return new MemoryGraphMatch(this);
+		
+	}
 }
