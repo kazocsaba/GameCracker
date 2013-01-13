@@ -54,11 +54,44 @@ public interface Match<P extends Position<P,M,T>, M extends Move<M,T>, T extends
 	public void move(M move);
 	
 	/**
+	 * Applies a move in the current position, and updates the match accordingly. This method behaves equivalently
+	 * to {@code move(getMove(moveIndex))}.
+	 * 
+	 * @param moveIndex the index of the move to make
+	 */
+	public void move(int moveIndex);
+	
+	/**
 	 * Undoes the last move, returning the match to the previous position.
 	 * 
-	 * @throws IllegalStateException if the match contains no moves
+	 * @throws IllegalStateException if the match contains no moves ({@code getLength() == 0})
 	 */
 	public void back();
+	
+	/**
+	 * Returns the number of moves in this match.
+	 * 
+	 * @return the number of moves
+	 */
+	public int getLength();
+	
+	/**
+	 * Returns the number of possible moves in the current position. The return value is equal to
+	 * {@code getPosition().getMoves().size()}.
+	 * 
+	 * @return the number of possible moves in the current position of the match
+	 */
+	public int getMoveCount();
+	
+	/**
+	 * Returns a specified possible move in the current position. The return value is equal to
+	 * {@code getPosition().getMoves().get(index)}.
+	 * 
+	 * @param index the index of the move
+	 * @return the specified move
+	 * @throws IndexOutOfBoundsException if the index is not valid
+	 */
+	public M getMove(int index);
 	
 	/**
 	 * Returns an unmodifiable iterator over the history of the match. The iterator is never empty:
