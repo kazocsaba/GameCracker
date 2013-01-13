@@ -76,4 +76,11 @@ public abstract class Game<P extends Position<P,M,T>, M extends Move<M,T>, T ext
 	 * @return a new game component
 	 */
 	public abstract GameComponent<P,M,T> createComponent();
+	
+	/**
+	 * Returns the identity of the transformation type corresponding to this game.
+	 * 
+	 * @return the identity transformation
+	 */
+	public abstract T getIdentityTransformation();
 }

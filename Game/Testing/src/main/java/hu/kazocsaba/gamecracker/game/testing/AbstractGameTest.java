@@ -43,6 +43,11 @@ public abstract class AbstractGameTest<G extends Game<P,M,T>, P extends Position
 		}
 		assertTrue(found, "Game "+game.getClass()+" not loadable via ServiceLoader");
 	}
+	
+	@Test
+	public void testIdentityTransformation() {
+		assertTrue(game.getIdentityTransformation().isIdentity());
+	}
 	/**
 	 * Asserts that two positions are equal. This function performs the following checks:
 	 * <ul>

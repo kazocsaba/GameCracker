@@ -45,5 +45,10 @@ public abstract class Reversi<P extends ReversiPosition<P,M>, M extends ReversiM
 		if (y<0 || y>=size) throw new IllegalArgumentException("Invalid row character: '"+y+"'");
 		return getMove(x, y);
 	}
+
+	@Override
+	public SwitchableSquareSymmetry getIdentityTransformation() {
+		return SwitchableSquareSymmetry.IDENTITY;
+	}
 	
 }

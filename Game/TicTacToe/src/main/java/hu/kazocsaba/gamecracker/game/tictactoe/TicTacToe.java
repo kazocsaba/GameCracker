@@ -58,5 +58,10 @@ public class TicTacToe extends Game<TicTacToePosition, TicTacToeMove, SquareSymm
 		if (y<0 || y>=3) throw new IllegalArgumentException("Invalid row character: '"+y+"'");
 		return TicTacToeMove.get(x, y);
 	}
+
+	@Override
+	public SquareSymmetry getIdentityTransformation() {
+		return SquareSymmetry.IDENTITY;
+	}
 	
 }
