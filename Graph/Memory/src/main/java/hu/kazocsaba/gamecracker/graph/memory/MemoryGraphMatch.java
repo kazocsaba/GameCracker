@@ -15,6 +15,10 @@ import java.util.NoSuchElementException;
  */
 class MemoryGraphMatch<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> extends GraphMatch<P, M, T> {
 	private final MemoryGraph<P, M, T> graph;
+	
+	private Object[] positions;
+	/* The number of actually valid positions. */
+	private int length;
 
 	public MemoryGraphMatch(final MemoryGraph<P, M, T> graph) {
 		this.graph = graph;
@@ -41,7 +45,7 @@ class MemoryGraphMatch<P extends Position<P,M,T>, M extends Move<M,T>, T extends
 		@Override
 		public M getMove() {
 			if (moveIndex == -1)
-				throw new IllegalStateException("No move");
+				return null;
 			return moves.get(moveIndex);
 		}
 
@@ -76,9 +80,6 @@ class MemoryGraphMatch<P extends Position<P,M,T>, M extends Move<M,T>, T extends
 			throw new UnsupportedOperationException();
 		}
 	}
-	private Object[] positions;
-	/* The number of actually valid positions. */
-	private int length;
 
 	@SuppressWarnings(value = "unchecked")
 	private MemoryGraphMatchPosition getLastPosition() {
@@ -87,7 +88,7 @@ class MemoryGraphMatch<P extends Position<P,M,T>, M extends Move<M,T>, T extends
 
 	@Override
 	public int getLength() {
-		return length;
+		return length-1;
 	}
 
 	@Override
@@ -134,7 +135,7 @@ class MemoryGraphMatch<P extends Position<P,M,T>, M extends Move<M,T>, T extends
 				newPositions[i] = new MemoryGraphMatchPosition();
 			positions = newPositions;
 		}
-		MemoryNode<P, M, T> childNode = graph.getNextNode(getLastPosition().node, move, getLastPosition().moves.indexOf(move));
+		MemoryNode<P, M, T> childNode = graph.getNextNode(getLastPosition().node, move.transform(getLastPosition().transformation));
 		getLastPosition().moveIndex = moveIndex;
 		T newTrans = getLastPosition().transformation;
 		MemoryNormalNode<P, M, T> nextNormal;
@@ -146,7 +147,7 @@ class MemoryGraphMatch<P extends Position<P,M,T>, M extends Move<M,T>, T extends
 			nextNormal = (MemoryNormalNode<P, M, T>) childNode;
 		}
 		length++;
-		getLastPosition().set(childNode.position, nextNormal, newTrans);
+		getLastPosition().set(nextNormal.position.transform(newTrans.inverse()), nextNormal, newTrans);
 	}
 
 	@Override

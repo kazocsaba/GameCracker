@@ -33,7 +33,8 @@ public class MemoryGraph<P extends Position<P,M,T>, M extends Move<M,T>, T exten
 	public Game<P,M,T> getGame() {
 		return game;
 	}
-	MemoryNode<P,M,T> getNextNode(MemoryNormalNode<P,M,T> node, M move, int moveIndex) {
+	MemoryNode<P,M,T> getNextNode(MemoryNormalNode<P,M,T> node, M move) {
+		int moveIndex=node.position.getMoves().indexOf(move);
 		if (node.getChild(moveIndex)!=null) return node.getChild(moveIndex);
 		P nextPosition=node.position.move(move);
 		long category=game.getCategoryFunction().category(nextPosition);
