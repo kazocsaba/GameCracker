@@ -3,9 +3,15 @@ package hu.kazocsaba.gamecracker.graph.memory;
 import hu.kazocsaba.gamecracker.game.Match;
 import hu.kazocsaba.gamecracker.game.Move;
 import hu.kazocsaba.gamecracker.game.Position;
+import hu.kazocsaba.gamecracker.game.SquareSymmetry;
+import hu.kazocsaba.gamecracker.game.SwitchableSquareSymmetry;
 import hu.kazocsaba.gamecracker.game.Transformation;
 import hu.kazocsaba.gamecracker.game.reversi.Reversi4;
+import hu.kazocsaba.gamecracker.game.reversi.Reversi4Move;
+import hu.kazocsaba.gamecracker.game.reversi.Reversi4Position;
 import hu.kazocsaba.gamecracker.game.tictactoe.TicTacToe;
+import hu.kazocsaba.gamecracker.game.tictactoe.TicTacToeMove;
+import hu.kazocsaba.gamecracker.game.tictactoe.TicTacToePosition;
 import hu.kazocsaba.gamecracker.graph.GraphMatch;
 import hu.kazocsaba.gamecracker.graph.GraphResult;
 import java.util.Iterator;
@@ -20,14 +26,14 @@ import org.testng.annotations.Test;
 public class MemoryGraphNGTest {
 	@Test(timeOut=5000)
 	public void testTicTacToe() {
-		MemoryGraph<?,?,?> graph=new MemoryGraph<>(new TicTacToe());
+		MemoryGraph<TicTacToePosition, TicTacToeMove, SquareSymmetry> graph=new MemoryGraph<>(new TicTacToe());
 		solve(graph.createMatch());
 		
 		assertEquals(graph.createMatch().getResult(), GraphResult.DRAW);
 	}
 	@Test(timeOut=5000)
 	public void testReversi() {
-		MemoryGraph<?,?,?> graph=new MemoryGraph<>(new Reversi4());
+		MemoryGraph<Reversi4Position, Reversi4Move, SwitchableSquareSymmetry> graph=new MemoryGraph<>(new Reversi4());
 		solve(graph.createMatch());
 		
 		assertEquals(graph.createMatch().getResult(), GraphResult.BLACK_WINS);

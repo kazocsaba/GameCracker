@@ -118,7 +118,6 @@ public class MemoryGraph<P extends Position<P,M,T>, M extends Move<M,T>, T exten
 
 	@Override
 	public GraphMatch<P, M, T> createMatch() {
-		return new MemoryGraphMatch(this);
-		
+		return new MemoryGraphMatch<>(this);
 	}
 }
