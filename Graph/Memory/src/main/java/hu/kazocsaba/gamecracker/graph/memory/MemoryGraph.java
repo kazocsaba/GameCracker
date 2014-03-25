@@ -6,6 +6,7 @@ import hu.kazocsaba.gamecracker.game.Position;
 import hu.kazocsaba.gamecracker.game.Transformation;
 import hu.kazocsaba.gamecracker.graph.Graph;
 import hu.kazocsaba.gamecracker.graph.GraphMatch;
+import hu.kazocsaba.gamecracker.graph.base.DefaultGraphMatch;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MemoryGraph<P extends Position<P,M,T>, M extends Move<M,T>, T exten
 
 	public MemoryGraph(Game<P,M,T> game) {
 		this.game = Objects.requireNonNull(game);
-		root=new MemoryNormalNode<>(game.getInitialPosition());
+		root=new MemoryNormalNode<>(this, game.getInitialPosition());
 		size=1;
 	}
 
@@ -98,7 +99,7 @@ public class MemoryGraph<P extends Position<P,M,T>, M extends Move<M,T>, T exten
 			/*
 			 * No match has been found in the graph, so a new normal node is created for the position.
 			 */
-			MemoryNormalNode<P,M,T> newNormalNode=new MemoryNormalNode<>(nextPosition);
+			MemoryNormalNode<P,M,T> newNormalNode=new MemoryNormalNode<>(this, nextPosition);
 			newNode=newNormalNode;
 			categoryList.add(newNormalNode);
 			size++;
@@ -118,6 +119,6 @@ public class MemoryGraph<P extends Position<P,M,T>, M extends Move<M,T>, T exten
 
 	@Override
 	public GraphMatch<P, M, T> createMatch() {
-		return new MemoryGraphMatch<>(this);
+		return new DefaultGraphMatch<>(root.position, root, game.getIdentityTransformation());
 	}
 }

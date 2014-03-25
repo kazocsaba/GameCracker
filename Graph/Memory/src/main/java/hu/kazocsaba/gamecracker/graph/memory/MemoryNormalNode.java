@@ -9,16 +9,24 @@ import hu.kazocsaba.gamecracker.game.Position;
 import hu.kazocsaba.gamecracker.game.Transformation;
 import hu.kazocsaba.gamecracker.graph.GraphResult;
 import hu.kazocsaba.gamecracker.graph.GraphResultComputer;
+import hu.kazocsaba.gamecracker.graph.base.Node;
+import hu.kazocsaba.gamecracker.graph.base.NormalNode;
+import java.util.Objects;
 
 /**
  *
  * @author Kazó Csaba
  */
-class MemoryNormalNode<P extends Position<P,M,T>, M extends Move<M,T>, T extends Transformation<T>> extends MemoryNode<P,M,T> {
+class MemoryNormalNode<
+		P extends Position<P,M,T>,
+		M extends Move<M,T>,
+		T extends Transformation<T>> extends MemoryNode<P,M,T> implements NormalNode<P,M,T> {
+	private final MemoryGraph<P,M,T> graph;
 	private final List<MemoryNode<P,M,T>> children;
 
-	MemoryNormalNode(P position) {
+	MemoryNormalNode(MemoryGraph<P,M,T> graph, P position) {
 		super(position);
+		this.graph = Objects.requireNonNull(graph);
 		int childCount=position.getMoves().size();
 		GameStatus status=position.getStatus();
 		if (childCount==0) {
@@ -30,6 +38,16 @@ class MemoryNormalNode<P extends Position<P,M,T>, M extends Move<M,T>, T extends
 			children=new ArrayList<>(Collections.<MemoryNode<P,M,T>>nCopies(childCount, null));
 			result=GraphResult.UNKNOWN;
 		}
+	}
+
+	@Override
+	public GraphResult getResult() {
+		return result;
+	}
+
+	@Override
+	public Node<P, M, T> getNextNode(M move) {
+		return graph.getNextNode(this, move);
 	}
 
 	void setChild(int index, MemoryNode<P,M,T> node) {

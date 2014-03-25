@@ -26,6 +26,10 @@
 			<artifactId>Graph-API</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>hu.kazocsaba.gamecracker</groupId>
+			<artifactId>Graph-Base</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 		</dependency>
