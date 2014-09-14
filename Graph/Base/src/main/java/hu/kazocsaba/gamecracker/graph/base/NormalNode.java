@@ -21,6 +21,8 @@ public interface NormalNode<
 	 * 
 	 * @param move the move defining the edge to the next node
 	 * @return the child node
+   * @throws IllegalArgumentException if the move is not valid in the position corresponding to this
+   *     node
 	 */
 	Node<P,M,T> getNextNode(M move);
 	

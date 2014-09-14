@@ -41,6 +41,9 @@ public class MemoryGraph<
 
   MemoryNode<P, M, T> getNextNode(MemoryNormalNode<P, M, T> node, M move) {
     int moveIndex = node.position.getMoves().indexOf(move);
+    if (moveIndex == -1) {
+      throw new IllegalArgumentException(String.format("Move %s is not valid", move));
+    }
     if (node.getChild(moveIndex) != null) {
       return node.getChild(moveIndex);
     }
