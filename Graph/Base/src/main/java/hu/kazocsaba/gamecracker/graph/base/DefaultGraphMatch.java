@@ -5,6 +5,7 @@ import hu.kazocsaba.gamecracker.game.Position;
 import hu.kazocsaba.gamecracker.game.Transformation;
 import hu.kazocsaba.gamecracker.graph.GraphMatch;
 import hu.kazocsaba.gamecracker.graph.GraphResult;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -60,8 +61,9 @@ public class DefaultGraphMatch<
 	@Override
 	public void move(M move) {
 		int moveIndex = pointList.getLast().moves.indexOf(move);
-		if (moveIndex == -1)
+		if (moveIndex == -1) {
 			throw new IllegalArgumentException("Invalid move: " + move);
+    }
 		move(move, moveIndex);
 	}
 
@@ -104,8 +106,9 @@ public class DefaultGraphMatch<
 		PointBase currentPoint = pointList.getLast();
 		
 		GraphResult graphResult=currentPoint.node.getResult();
-		if (currentPoint.transformationToGraph.isPlayerSwitching())
+		if (currentPoint.transformationToGraph.isPlayerSwitching()) {
 			graphResult=graphResult.getOther();
+    }
 		return graphResult;
 	}
 	
@@ -142,8 +145,9 @@ public class DefaultGraphMatch<
 		}
 		
 		private void fillNewArrayElements() {
-			for (int i=length; i<points.length; i++)
+			for (int i=length; i<points.length; i++) {
 				points[i]=new PointBase();
+      }
 		}
 		
 		@SuppressWarnings("unchecked")
@@ -165,17 +169,18 @@ public class DefaultGraphMatch<
 		}
 
 		public void add(int moveIndex, P position, NormalNode<P,M,T> node, T transformation) {
-			if (length == points.length)
+			if (length == points.length) {
 				grow();
-			
+      }
 			getLast().moveIndex = moveIndex;
 			length++;
 			getLast().set(position, node, transformation);
 		}
 
 		public void back() {
-			if (length == 1)
+			if (length == 1) {
 				throw new IllegalStateException("No move to undo");
+      }
 			length--;
 			getLast().moveIndex = -1;
 		}
@@ -191,8 +196,9 @@ public class DefaultGraphMatch<
 			@SuppressWarnings(value = "unchecked")
 			@Override
 			public Point<P, M, T> next() {
-				if (!hasNext())
+				if (!hasNext()) {
 					throw new NoSuchElementException();
+        }
 				return (Point<P, M, T>) points[nextIndex++];
 			}
 
@@ -236,8 +242,9 @@ public class DefaultGraphMatch<
 
 		@Override
 		public M getMove() {
-			if (moveIndex == -1)
+			if (moveIndex == -1) {
 				return null;
+      }
 			return moves.get(moveIndex);
 		}
 		
