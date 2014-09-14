@@ -11,8 +11,11 @@ import hu.kazocsaba.gamecracker.graph.base.NormalNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *
@@ -86,39 +89,35 @@ class MemoryNormalNode<
     }
   }
 
+  private static <E> E removeOne(Set<E> set) {
+    Iterator<E> iterator = set.iterator();
+    E result = iterator.next();
+    iterator.remove();
+    return result;
+  }
+
   private static <
       P extends Position<P, M, T>,
       M extends Move<M, T>,
-      T extends Transformation<T>> void recomputeResults(List<MemoryNode<P, M, T>> nodes) {
+      T extends Transformation<T>> void recomputeResults(Set<MemoryNode<P, M, T>> nodes) {
     do {
-      MemoryNode<P, M, T> next = nodes.remove(0);
-      if (next instanceof MemoryNormalNode) {
-        MemoryNormalNode<P, M, T> node = (MemoryNormalNode<P, M, T>) next;
-        if (!node.result.isKnown()) {
-          GraphResult newResult = computeResult(node);
-          if (newResult != node.result) {
-            node.result = newResult;
-            for (MemoryNode<P, M, T> parent : node.parents) {
-              if (!nodes.contains(parent)) {
-                nodes.add(parent);
-              }
-            }
-          }
-        }
+      MemoryNode<P, M, T> node = removeOne(nodes);
+      GraphResult result = node.result;
+      if (result.isKnown()) {
+        continue;
+      }
+      if (node instanceof MemoryNormalNode) {
+        result = computeResult((MemoryNormalNode<P, M, T>) node);
       } else {
-        MemoryTransformationNode<P, M, T> node = (MemoryTransformationNode<P, M, T>) next;
-        GraphResult newResult = node.linkedNode.result;
-        if (node.transformation.isPlayerSwitching()) {
-          newResult = newResult.getOther();
+        MemoryTransformationNode<P, M, T> trNode = (MemoryTransformationNode<P, M, T>) node;
+        result = trNode.linkedNode.result;
+        if (trNode.transformation.isPlayerSwitching()) {
+          result = result.getOther();
         }
-        if (node.result != newResult) {
-          node.result = newResult;
-          for (MemoryNode<P, M, T> parent : node.parents) {
-            if (!nodes.contains(parent)) {
-              nodes.add(parent);
-            }
-          }
-        }
+      }
+      if (result != node.result) {
+        node.result = result;
+        nodes.addAll(node.parents);
       }
     } while (!nodes.isEmpty());
   }
@@ -136,7 +135,7 @@ class MemoryNormalNode<
       if (node.parents.size() == 1) {
         recomputeResult(node.parents.get(0));
       } else {
-        recomputeResults(new ArrayList<>(node.parents));
+        recomputeResults(new HashSet<>(node.parents));
       }
     }
   }
@@ -151,7 +150,7 @@ class MemoryNormalNode<
       if (node.parents.size() == 1) {
         recomputeResult(node.parents.get(0));
       } else if (node.parents.size() > 0) {
-        recomputeResults(new ArrayList<>(node.parents));
+        recomputeResults(new HashSet<>(node.parents));
       }
     }
 
